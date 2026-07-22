@@ -746,18 +746,18 @@
       }
     }
   },
-  "weightLogs": [
-    {
+  "weightLogs": {
+    "0": {
       "date": "2026-06-07",
       "weight": 85.5,
       "notes": ""
     },
-    {
+    "1": {
       "date": "2026-06-08",
       "weight": 85,
       "notes": "Peso Base de Partida"
     }
-  ],
+  },
   "gymLogs": {
     "2026-06-07": {
       "a_d1_m1": [
@@ -2298,6 +2298,7 @@
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": ""
-  }
+    "lastSync": "2026-07-22T21:23:29.330Z"
+  },
+  "wellnessLogs": {}
 }
