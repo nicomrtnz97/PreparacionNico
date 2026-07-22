@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+
+
+<html lang="es">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <title>Calendario Semanal - Portero</title>
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+
+
+    <style>
+
+
+
+        :root {
+
+
+
+            --bg-color: #0d0f12;
+
+
+
+            --card-bg: #161a22;
+
+
+
+            --primary: #3b82f6;
+
+
+
+            --text-main: #f3f4f6;
+
+
+
+            --text-muted: #9ca3af;
+
+
+
+            --border: #242b35;
+
+
+
+            --accent-green: #10b981;
+
+
+
+            --accent-amber: #f59e0b;
+
+
+
+        }
+
+
+
+        * {
+
+
+
+            box-sizing: border-box;
+
+
+
+            margin: 0;
+
+
+
+            padding: 0;
+
+
+
+        }
+
+
+
+        body {
+
+
+
+            font-family: 'Outfit', sans-serif;
+
+
+
+            background-color: var(--bg-color);
+
+
+
+            color: var(--text-main);
+
+
+
+            padding: 15px;
+
+
+
+            padding-bottom: 50px;
+
+
+
+        }
+
+
+
+        header {
+
+
+
+            text-align: center;
+
+
+
+            margin-bottom: 25px;
+
+
+
+            padding: 20px 10px;
+
+
+
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+
+
+
+            border-radius: 16px;
+
+
+
+            border: 1px solid var(--border);
+
+
+
+        }
+
+
+
+        header h1 {
+
+
+
+            font-size: 1.8rem;
+
+
+
+            font-weight: 700;
+
+
+
+            color: #fff;
+
+
+
+            margin-bottom: 5px;
+
+
+
+        }
+
+
+
+        header p {
+
+
+
+            color: var(--text-muted);
+
+
+
+            font-size: 0.9rem;
+
+
+
+        }
+
+
+
+        .tab-container {
+
+
+
+            display: flex;
+
+
+
+            gap: 10px;
+
+
+
+            margin-bottom: 20px;
+
+
+
+        }
+
+
+
+        .tab-btn {
+
+
+
+            flex: 1;
+
+
+
+            padding: 12px;
+
+
+
+            background-color: var(--card-bg);
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            color: var(--text-muted);
+
+
+
+            border-radius: 10px;
+
+
+
+            font-weight: 600;
+
+
+
+            font-size: 0.9rem;
+
+
+
+            cursor: pointer;
+
+
+
+            text-align: center;
+
+
+
+            transition: all 0.2s ease;
+
+
+
+        }
+
+
+
+        .tab-btn.active {
+
+
+
+            background-color: var(--primary);
+
+
+
+            color: white;
+
+
+
+            border-color: var(--primary);
+
+
+
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+
+
+        }
+
+
+
+        .calendar-section {
+
+
+
+            display: none;
+
+
+
+        }
+
+
+
+        .calendar-section.active {
+
+
+
+            display: block;
+
+
+
+        }
+
+
+
+        .rules-card {
+
+
+
+            background-color: rgba(59, 130, 246, 0.05);
+
+
+
+            border: 1px solid rgba(59, 130, 246, 0.2);
+
+
+
+            border-radius: 12px;
+
+
+
+            padding: 15px;
+
+
+
+            margin-bottom: 20px;
+
+
+
+            font-size: 0.9rem;
+
+
+
+        }
+
+
+
+        .rules-card h3 {
+
+
+
+            color: #fff;
+
+
+
+            margin-bottom: 8px;
+
+
+
+            font-size: 1rem;
+
+
+
+        }
+
+
+
+        .rules-card ul {
+
+
+
+            list-style: none;
+
+
+
+        }
+
+
+
+        .rules-card li {
+
+
+
+            margin-bottom: 8px;
+
+
+
+            position: relative;
+
+
+
+            padding-left: 15px;
+
+
+
+            line-height: 1.4;
+
+
+
+            color: var(--text-muted);
+
+
+
+        }
+
+
+
+        .rules-card li::before {
+
+
+
+            content: "•";
+
+
+
+            color: var(--primary);
+
+
+
+            font-weight: bold;
+
+
+
+            position: absolute;
+
+
+
+            left: 0;
+
+
+
+        }
+
+
+
+        .day-card {
+
+
+
+            background-color: var(--card-bg);
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            border-radius: 12px;
+
+
+
+            padding: 15px;
+
+
+
+            margin-bottom: 12px;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            gap: 8px;
+
+
+
+        }
+
+
+
+        .day-meta {
+
+
+
+            display: flex;
+
+
+
+            justify-content: space-between;
+
+
+
+            align-items: center;
+
+
+
+        }
+
+
+
+        .day-name {
+
+
+
+            font-weight: 700;
+
+
+
+            font-size: 1.1rem;
+
+
+
+            color: #fff;
+
+
+
+        }
+
+
+
+        .activity-badge {
+
+
+
+            font-size: 0.8rem;
+
+
+
+            font-weight: 600;
+
+
+
+            padding: 4px 10px;
+
+
+
+            border-radius: 8px;
+
+
+
+            text-transform: uppercase;
+
+
+
+        }
+
+
+
+        .activity-badge.gym {
+
+
+
+            background-color: rgba(59, 130, 246, 0.1);
+
+
+
+            color: var(--primary);
+
+
+
+            border: 1px solid rgba(59, 130, 246, 0.2);
+
+
+
+        }
+
+
+
+        .activity-badge.padel {
+
+
+
+            background-color: rgba(16, 185, 129, 0.1);
+
+
+
+            color: var(--accent-green);
+
+
+
+            border: 1px solid rgba(16, 185, 129, 0.2);
+
+
+
+        }
+
+
+
+        .activity-badge.f7 {
+
+
+
+            background-color: rgba(245, 158, 11, 0.1);
+
+
+
+            color: var(--accent-amber);
+
+
+
+            border: 1px solid rgba(245, 158, 11, 0.2);
+
+
+
+        }
+
+
+
+        .activity-badge.rest {
+
+
+
+            background-color: rgba(156, 163, 175, 0.1);
+
+
+
+            color: var(--text-muted);
+
+
+
+            border: 1px solid rgba(156, 163, 175, 0.2);
+
+
+
+        }
+
+
+
+        .day-desc {
+
+
+
+            font-size: 0.9rem;
+
+
+
+            color: var(--text-main);
+
+
+
+            font-weight: 600;
+
+
+
+        }
+
+
+
+        .day-notes {
+
+
+
+            font-size: 0.82rem;
+
+
+
+            color: var(--text-muted);
+
+
+
+            line-height: 1.4;
+
+
+
+            border-top: 1px solid var(--border);
+
+
+
+            padding-top: 8px;
+
+
+
+            margin-top: 4px;
+
+
+
+        }
+
+
+
+    </style>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+    <header>
+
+
+
+        <h1>CALENDARIO SEMANAL</h1>
+
+
+
+        <p>Semana del 29 de Junio al 5 de Julio, 2026</p>
+
+
+
+    </header>
+
+
+
+    <div class="tab-container">
+
+
+
+        <button class="tab-btn active" onclick="switchTab('fase0')">Esta Semana (Fase 0)</button>
+
+
+
+        <button class="tab-btn" onclick="switchTab('fase1')">Pretemporada (Fase 1)</button>
+
+
+
+    </div>
+
+
+
+    <!-- FASE 0 -->
+
+
+
+    <div id="fase0" class="calendar-section active">
+
+        <div class="rules-card">
+
+            <h3>🧭 Reglas de Oro Dinámicas:</h3>
+
+            <ul>
+
+                <li><strong>Gimnasio Día 1 (Piernas):</strong> Sepáralo por al menos 24 horas de tus partidos o entrenamientos de F11 o de un pádel intenso.</li>
+
+                <li><strong>Espaciado:</strong> Deja al menos un día de descanso de pesas entre entrenamientos de gimnasio.</li>
+
+                <li><strong>Pádel/F11:</strong> Son tus estímulos de velocidad/cardio. Aprovéchalos y descansa al día siguiente si hay dolor rotuliano.</li>
+
+            </ul>
+
+        </div>
+
+        <!-- LUNES -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">LUNES (29/06)</span>
+
+                <span class="activity-badge gym">🏋️‍♂️ GIMNASIO: DÍA 1</span>
+
+            </div>
+
+            <div class="day-desc">Fuerza Pierna (Descarga)</div>
+
+            <div class="day-notes">**SEMANA DE DESCARGA ACTIVA (Deload):** Volumen de entrenamiento al 50% (2 series por ejercicio). Mantén el peso alto, pero reduce las series para permitir asimilación.</div>
+
+        </div>
+
+        <!-- MARTES -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">MARTES (30/06)</span>
+
+                <span class="activity-badge padel">🎾 PÁDEL</span>
+
+            </div>
+
+            <div class="day-desc">Partido de Pádel 1</div>
+
+            <div class="day-notes">Cardio y agilidad lateral. Las piernas estarán muy frescas de la sesión corta del lunes.</div>
+
+        </div>
+
+        <!-- MIÉRCOLES -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">MIÉRCOLES (01/07)</span>
+
+                <span class="activity-badge gym">🏋️‍♂️ GIMNASIO: DÍA 2</span>
+
+            </div>
+
+            <div class="day-desc">Fuerza Superior (Descarga)</div>
+
+            <div class="day-notes">Volumen de entrenamiento al 50% (2 series). Enfoque en dominadas, remo y estabilidad de hombros.</div>
+
+        </div>
+
+        <!-- JUEVES -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">JUEVES (02/07)</span>
+
+                <span class="activity-badge padel">🎾 PÁDEL</span>
+
+            </div>
+
+            <div class="day-desc">Partido de Pádel 2</div>
+
+            <div class="day-notes">Segundo estímulo cardiovascular lateral de la semana.</div>
+
+        </div>
+
+        <!-- VIERNES -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">VIERNES (03/07)</span>
+
+                <span class="activity-badge gym">🏋️‍♂️ GIMNASIO: DÍA 3</span>
+
+            </div>
+
+            <div class="day-desc">Potencia / Empuje (Descarga)</div>
+
+            <div class="day-notes">Volumen al 50% (2 series). Sin saltos pliométricos ni sprints explosivos para dar descanso completo a los tendones.</div>
+
+        </div>
+
+        <!-- SÁBADO -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">SÁBADO (04/07)</span>
+
+                <span class="activity-badge rest">🛋️ DESCANSO TOTAL</span>
+
+            </div>
+
+            <div class="day-desc">Descanso de descarga</div>
+
+            <div class="day-notes">Recuperación pasiva y asimilación de la semana de descarga.</div>
+
+        </div>
+
+        <!-- DOMINGO -->
+
+        <div class="day-card">
+
+            <div class="day-meta">
+
+                <span class="day-name">DOMINGO (05/07)</span>
+
+                <span class="activity-badge rest">🛋️ DESCANSO TOTAL</span>
+
+            </div>
+
+            <div class="day-desc">Desconexión y Descanso</div>
+
+            <div class="day-notes">Carga pilas para el inicio de las semanas de carga del Bloque B.</div>
+
+        </div>
+
+    </div>
+
+    
+    <!-- FASE 1 -->
+    <div id="fase1" class="calendar-section">
+        <div class="rules-card">
+            <h3>🧭 Reglas de Oro de Pretemporada (Fase 1):</h3>
+            <ul>
+                <li><strong>Volumen de Fuerza Reducido:</strong> En gimnasio reducimos a 2-3 series con RIR 3-4 (máxima velocidad, cero agujetas).</li>
+                <li><strong>Ondulación por Partidos:</strong> En semanas con 2 partidos (Semanas 2 y 4), se elimina o reduce el gimnasio de pierna.</li>
+                <li><strong>Prevención de Pubalgia e Ingle:</strong> Las planchas Copenhague se mantendrán para blindar la pelvis.</li>
+            </ul>
+        </div>
+
+        <!-- SEMANA 1 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 1 (30 de Julio - 2 de Agosto) — Transición y Contacto</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (27/07)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso / Movilidad Activa</div>
+            <div class="day-notes">Recuperación activa y movilidad.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (28/07)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1</span>
+            </div>
+            <div class="day-desc">Fuerza Piernas (Mantenimiento)</div>
+            <div class="day-notes">Fuerza estructural piernas (volumen moderado).</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (29/07)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2</span>
+            </div>
+            <div class="day-desc">Fuerza Superior</div>
+            <div class="day-notes">Tracciones y estabilidad de hombro derecho.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (30/07)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (20:00)</div>
+            <div class="day-notes">Primer entrenamiento oficial del 1º Equipo en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (31/07)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana) + Campo (20:00)</div>
+            <div class="day-notes">Puesta a punto corta (PAP - 20 min) por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (01/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso Total</div>
+            <div class="day-notes">Recuperación muscular estructural.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (02/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso Total</div>
+            <div class="day-notes">Recuperación muscular estructural.</div>
+        </div>
+
+        <!-- SEMANA 2 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 2 (3 de Agosto - 9 de Agosto) — Volumen de Campo y 1 Partido</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (03/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Fuerza Superior (Mañana) + Campo (20:00)</div>
+            <div class="day-notes">Torso por la mañana, campo por la tarde.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (04/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (20:00)</div>
+            <div class="day-notes">Sesión de campo en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (05/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Fuerza Piernas (Mañana) + Campo (20:00)</div>
+            <div class="day-notes">Fuerza de piernas volumen moderado (2 sets) por la mañana. *(Aboño cancelado).*</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (06/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (20:00)</div>
+            <div class="day-notes">Sesión táctica en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (07/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana) + Campo (20:00)</div>
+            <div class="day-notes">Puesta a punto corta (PAP - 20 min) por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (08/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs S.D. Navarro (20:00)</div>
+            <div class="day-notes">En Santa Cruz. Partido amistoso exigente.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (09/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso total</div>
+            <div class="day-notes">Recuperación del microciclo.</div>
+        </div>
+
+        <!-- SEMANA 3 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 3 (10 de Agosto - 16 de Agosto) — Carga Específica (1 Partido)</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (10/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Fuerza Superior (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Torso y core por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (11/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (19:00)</div>
+            <div class="day-notes">Sesión táctica en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (12/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Fuerza Piernas (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Fuerza de piernas volumen bajo (2 sets) por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (13/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Puesta a punto (PAP - 20 min) por la mañana. Activación pre-partido.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (14/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs Uni Oviedo (18:45)</div>
+            <div class="day-notes">En Universitario. *(Reemplaza al Mosconia).*</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (15/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso total</div>
+            <div class="day-notes">Recuperación y descanso activo.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (16/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso total</div>
+            <div class="day-notes">Recuperación muscular y del SNC.</div>
+        </div>
+
+        <!-- SEMANA 4 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 4 (17 de Agosto - 23 de Agosto) — Doble Amistoso</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (17/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (19:00)</div>
+            <div class="day-notes">Sesión de campo en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (18/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs TSK Roces DH (19:00)</div>
+            <div class="day-notes">En Santa Cruz. Primer amistoso de la semana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (19/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso absoluto</div>
+            <div class="day-notes">Recuperación post-partido del martes.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (20/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Torso (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Fuerza superior y core por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (21/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Activación nerviosa (PAP) antes del sábado. Sin piernas pesadas.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (22/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs C. Condal (20:00)</div>
+            <div class="day-notes">En Santa Cruz. Segundo partido amistoso de la semana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (23/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso total</div>
+            <div class="day-notes">Recuperación del microciclo.</div>
+        </div>
+
+        <!-- SEMANA 5 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 5 (24 de Agosto - 30 de Agosto) — Doble Amistoso y Aductores</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (24/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (19:00)</div>
+            <div class="day-notes">Sesión táctica en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (25/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Piernas (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Fuerza piernas volumen bajo (2 series). 48h de margen antes del amistoso.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (26/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso absoluto</div>
+            <div class="day-notes">Recuperación y descanso activo.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (27/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs Avilés Stadium (19:00)</div>
+            <div class="day-notes">En Muro Zaro. Primer partido de la semana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (28/08)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Torso (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Fuerza superior y core por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (29/08)</span>
+                <span class="activity-badge f7">⚽ Partido Amistoso</span>
+            </div>
+            <div class="day-desc">Partido vs C.D. Covadonga (19:30)</div>
+            <div class="day-notes">En Santa Cruz. Trofeo Jovellanos.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (30/08)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso total</div>
+            <div class="day-notes">Recuperación profunda.</div>
+        </div>
+
+        <!-- SEMANA 6 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 6 (31 de Agosto - 6 de Septiembre) — Semana Competitiva (Jornada 1)</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (31/08)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (19:00)</div>
+            <div class="day-notes">Primer día de campo de la semana de liga.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (01/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Torso (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Torso y movilidad de hombro para prepararse.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (02/09)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso absoluto</div>
+            <div class="day-notes">Recuperación de mitad de semana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (03/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Piernas (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Fuerza piernas (Mantenimiento) a 72h de competir. Asegura piernas frescas.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (04/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana) + Campo (19:00)</div>
+            <div class="day-notes">Activación pre-partido (PAP - 20 min) por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (05/09)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso / Activación suave</div>
+            <div class="day-notes">Recuperación e hidratación (Movilidad y estiramientos).</div>
+        </div>
+        <div class="day-card" style="border-left-color: var(--primary);">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (06/09)</span>
+                <span class="activity-badge f7" style="color: var(--primary); background-color: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2);">🥅 JORNADA 1 (COMPETICIÓN)</span>
+            </div>
+            <div class="day-desc">Jornada 1 - Liga (Partido 1º Equipo)</div>
+            <div class="day-notes">Rendimiento máximo bajo palos.</div>
+        </div>
+
+        <!-- SEMANA 7 -->
+        <h3 style="color: var(--primary); margin: 35px 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 1.05rem;">🟢 SEMANA 7 (7 de Septiembre - 13 de Septiembre) — Semana Competitiva (Jornada 2)</h3>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">LUNES (07/09)</span>
+                <span class="activity-badge rest">🛋️ Descanso</span>
+            </div>
+            <div class="day-desc">Descanso absoluto</div>
+            <div class="day-notes">Recuperación post-partido.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MARTES (08/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 2</span>
+            </div>
+            <div class="day-desc">Gym Torso</div>
+            <div class="day-notes">Fuerza superior y core - Estabilidad hombro derecho.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">MIÉRCOLES (09/09)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (19:00)</div>
+            <div class="day-notes">Sesión de campo en Santa Cruz.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">JUEVES (10/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 1 + ⚽ Campo</span>
+            </div>
+            <div class="day-desc">Gym Piernas + Campo (19:00)</div>
+            <div class="day-notes">Fuerza piernas (Mantenimiento) a 72h de competir. Asegura piernas frescas.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">VIERNES (11/09)</span>
+                <span class="activity-badge gym">🏋️‍♂️ Gym: Día 3</span>
+            </div>
+            <div class="day-desc">Gym PAP (Mañana)</div>
+            <div class="day-notes">Puesta a punto corta por la mañana.</div>
+        </div>
+        <div class="day-card">
+            <div class="day-meta">
+                <span class="day-name">SÁBADO (12/09)</span>
+                <span class="activity-badge f7">⚽ Campo (Entrenamiento)</span>
+            </div>
+            <div class="day-desc">Entrenamiento de Campo (Mañana) (10:00)</div>
+            <div class="day-notes">Última sesión de activación en Santa Cruz.</div>
+        </div>
+        <div class="day-card" style="border-left-color: var(--primary);">
+            <div class="day-meta">
+                <span class="day-name">DOMINGO (13/09)</span>
+                <span class="activity-badge f7" style="color: var(--primary); background-color: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2);">🥅 JORNADA 2 (COMPETICIÓN)</span>
+            </div>
+            <div class="day-desc">Jornada 2 - Liga (Partido 1º Equipo)</div>
+            <div class="day-notes">Rendimiento máximo bajo palos.</div>
+        </div>
+    </div>
+    <script>
+
+
+
+        function switchTab(faseId) {
+
+
+
+            document.querySelectorAll('.calendar-section').forEach(section => {
+
+
+
+                section.classList.remove('active');
+
+
+
+            });
+
+
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+
+
+
+                btn.classList.remove('active');
+
+
+
+            });
+
+
+
+            document.getElementById(faseId).classList.add('active');
+
+
+
+            event.currentTarget.classList.add('active');
+
+
+
+        }
+
+
+
+    </script>
+
+
+
+</body>
+
+
+
+</html>
+
+
+

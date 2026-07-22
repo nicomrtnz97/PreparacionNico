@@ -1,0 +1,5795 @@
+<!DOCTYPE html>
+
+
+
+<html lang="es">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <title>Rutina de Fuerza - Portero</title>
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+
+
+    <style>
+
+
+
+        :root {
+
+
+
+            --bg-color: #080a0f;
+
+
+
+            --card-bg: #11141e;
+
+
+
+            --primary: #3b82f6;
+
+
+
+            --text-main: #f3f4f6;
+
+
+
+            --text-muted: #9ca3af;
+
+
+
+            --border: #1e2430;
+
+
+
+            --accent-green: #10b981;
+
+
+
+            --accent-amber: #f59e0b;
+
+
+
+            --accent-purple: #a855f7;
+
+
+
+            --glow-color: rgba(59, 130, 246, 0.15);
+
+
+
+        }
+
+
+
+        * {
+
+
+
+            box-sizing: border-box;
+
+
+
+            margin: 0;
+
+
+
+            padding: 0;
+
+
+
+        }
+
+
+
+        body {
+
+
+
+            font-family: 'Outfit', sans-serif;
+
+
+
+            background-color: var(--bg-color);
+
+
+
+            color: var(--text-main);
+
+
+
+            padding: 15px;
+
+
+
+            padding-bottom: 50px;
+
+
+
+        }
+
+
+
+        .banner-container {
+
+
+
+            width: 100%;
+
+
+
+            height: 180px;
+
+
+
+            border-radius: 16px;
+
+
+
+            overflow: hidden;
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            margin-bottom: 20px;
+
+
+
+            position: relative;
+
+
+
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+
+
+        }
+
+
+
+        .banner-container img {
+
+
+
+            width: 100%;
+
+
+
+            height: 100%;
+
+
+
+            object-fit: cover;
+
+
+
+        }
+
+
+
+        .banner-overlay {
+
+
+
+            position: absolute;
+
+
+
+            bottom: 0;
+
+
+
+            left: 0;
+
+
+
+            right: 0;
+
+
+
+            background: linear-gradient(transparent, rgba(8, 10, 15, 0.98));
+
+
+
+            padding: 15px;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            justify-content: flex-end;
+
+
+
+        }
+
+
+
+        .banner-overlay h1 {
+
+
+
+            font-size: 1.4rem;
+
+
+
+            font-weight: 700;
+
+
+
+            color: #fff;
+
+
+
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+
+
+        }
+
+
+
+        .banner-overlay p {
+
+
+
+            color: var(--text-muted);
+
+
+
+            font-size: 0.85rem;
+
+
+
+        }
+
+
+
+        .phase-badge {
+
+
+
+            align-self: flex-start;
+
+
+
+            background: linear-gradient(90deg, var(--primary), #2563eb);
+
+
+
+            color: white;
+
+
+
+            padding: 3px 10px;
+
+
+
+            border-radius: 20px;
+
+
+
+            font-size: 0.75rem;
+
+
+
+            font-weight: 700;
+
+
+
+            margin-top: 6px;
+
+
+
+            text-transform: uppercase;
+
+
+
+            letter-spacing: 0.5px;
+
+
+
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+
+
+
+        }
+
+
+
+        .tab-container {
+
+
+
+            display: flex;
+
+
+
+            gap: 10px;
+
+
+
+            margin-bottom: 20px;
+
+
+
+            overflow-x: auto;
+
+
+
+            padding-bottom: 5px;
+
+
+
+        }
+
+
+
+        .tab-btn {
+
+
+
+            flex: 1;
+
+
+
+            min-width: 110px;
+
+
+
+            padding: 12px 8px;
+
+
+
+            background-color: var(--card-bg);
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            color: var(--text-muted);
+
+
+
+            border-radius: 10px;
+
+
+
+            font-weight: 600;
+
+
+
+            font-size: 0.85rem;
+
+
+
+            cursor: pointer;
+
+
+
+            text-align: center;
+
+
+
+            transition: all 0.2s ease;
+
+
+
+            white-space: nowrap;
+
+
+
+        }
+
+
+
+        .tab-btn.active {
+
+
+
+            background-color: var(--primary);
+
+
+
+            color: white;
+
+
+
+            border-color: var(--primary);
+
+
+
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+
+
+        }
+
+
+
+        .block-section {
+
+
+
+            display: none;
+
+
+
+        }
+
+
+
+        .block-section.active {
+
+
+
+            display: block;
+
+
+
+        }
+
+
+
+        .day-container {
+
+
+
+            background-color: var(--card-bg);
+
+
+
+            border-radius: 16px;
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            padding: 20px;
+
+
+
+            margin-bottom: 25px;
+
+
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+
+
+        }
+
+
+
+        .day-header {
+
+
+
+            display: flex;
+
+
+
+            justify-content: space-between;
+
+
+
+            align-items: center;
+
+
+
+            border-bottom: 2px solid var(--border);
+
+
+
+            padding-bottom: 12px;
+
+
+
+            margin-bottom: 15px;
+
+
+
+            flex-wrap: wrap;
+
+
+
+            gap: 5px;
+
+
+
+        }
+
+
+
+        .day-title {
+
+
+
+            font-size: 1.3rem;
+
+
+
+            font-weight: 700;
+
+
+
+            color: #fff;
+
+
+
+        }
+
+
+
+        .day-subtitle {
+
+
+
+            font-size: 0.85rem;
+
+
+
+            color: var(--text-muted);
+
+
+
+            font-weight: 500;
+
+
+
+        }
+
+
+
+        .block-title {
+
+
+
+            font-size: 0.8rem;
+
+
+
+            text-transform: uppercase;
+
+
+
+            letter-spacing: 1.2px;
+
+
+
+            color: var(--text-muted);
+
+
+
+            margin-top: 20px;
+
+
+
+            margin-bottom: 10px;
+
+
+
+            font-weight: 700;
+
+
+
+            border-left: 3px solid var(--border);
+
+
+
+            padding-left: 8px;
+
+
+
+        }
+
+
+
+        .exercise-card {
+
+
+
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.005) 100%);
+
+
+
+            border-left: 4px solid var(--primary);
+
+
+
+            padding: 16px;
+
+
+
+            margin-bottom: 14px;
+
+
+
+            border-radius: 4px 12px 12px 4px;
+
+
+
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+
+
+
+            border-right: 1px solid rgba(255, 255, 255, 0.03);
+
+
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+
+
+
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+
+
+        }
+
+
+
+        .exercise-card:hover {
+
+
+
+            transform: translateY(-2px);
+
+
+
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+
+
+            border-top-color: rgba(255, 255, 255, 0.06);
+
+
+
+            border-right-color: rgba(255, 255, 255, 0.06);
+
+
+
+            border-bottom-color: rgba(255, 255, 255, 0.06);
+
+
+
+        }
+
+
+
+        .exercise-card.warmup { border-left-color: var(--accent-amber); }
+
+
+
+        .exercise-card.plyo { border-left-color: var(--accent-green); }
+
+
+
+        .exercise-card.core { border-left-color: var(--accent-purple); }
+
+
+
+        .exercise-header {
+
+
+
+            display: flex;
+
+
+
+            justify-content: space-between;
+
+
+
+            align-items: center;
+
+
+
+            margin-bottom: 10px;
+
+
+
+            flex-wrap: wrap;
+
+
+
+            gap: 8px;
+
+
+
+        }
+
+
+
+        .exercise-name-container {
+
+
+
+            display: flex;
+
+
+
+            align-items: center;
+
+
+
+            flex-wrap: wrap;
+
+
+
+            gap: 6px;
+
+
+
+        }
+
+
+
+        .exercise-name {
+
+
+
+            font-weight: 600;
+
+
+
+            font-size: 1.02rem;
+
+
+
+            color: #fff;
+
+
+
+            letter-spacing: 0.2px;
+
+
+
+        }
+
+
+
+        .superserie-badge {
+
+
+
+            font-size: 0.65rem;
+
+
+
+            font-weight: 700;
+
+
+
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+
+
+
+            color: white;
+
+
+
+            padding: 2px 6px;
+
+
+
+            border-radius: 4px;
+
+
+
+            letter-spacing: 0.5px;
+
+
+
+            text-transform: uppercase;
+
+
+
+            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.2);
+
+
+
+        }
+
+
+
+        .exercise-type-tag {
+
+
+
+            font-size: 0.65rem;
+
+
+
+            font-weight: 700;
+
+
+
+            text-transform: uppercase;
+
+
+
+            padding: 2px 8px;
+
+
+
+            border-radius: 6px;
+
+
+
+            letter-spacing: 0.5px;
+
+
+
+        }
+
+
+
+        .type-movilidad { color: var(--accent-amber); background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+
+
+        .type-activacion { color: var(--accent-amber); background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+
+
+        .type-pliometria { color: var(--accent-green); background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); }
+
+
+
+        .type-fuerza { color: var(--primary); background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); }
+
+
+
+        .type-core { color: #c084fc; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.2); }
+
+
+
+        /* TABLA DE PARÁMETROS DEL EJERCICIO */
+
+
+
+        .exercise-stats {
+
+
+
+            display: flex;
+
+
+
+            flex-wrap: wrap;
+
+
+
+            gap: 6px;
+
+
+
+            margin: 12px 0;
+
+
+
+        }
+
+
+
+        .stat-pill {
+
+
+
+            flex: 1 1 calc(20% - 6px);
+
+
+
+            min-width: 75px;
+
+
+
+            background-color: rgba(0, 0, 0, 0.25);
+
+
+
+            border: 1px solid rgba(255, 255, 255, 0.04);
+
+
+
+            border-radius: 8px;
+
+
+
+            padding: 8px 4px;
+
+
+
+            text-align: center;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            transition: all 0.2s ease;
+
+
+
+        }
+
+
+
+        .exercise-card.warmup .stat-pill:hover { border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.02); }
+
+
+
+        .exercise-card.plyo .stat-pill:hover { border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.02); }
+
+
+
+        .exercise-card.core .stat-pill:hover { border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.02); }
+
+
+
+        .exercise-card:not(.warmup):not(.plyo):not(.core) .stat-pill:hover { border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.02); }
+
+
+
+        .stat-label {
+
+
+
+            font-size: 0.58rem;
+
+
+
+            text-transform: uppercase;
+
+
+
+            color: var(--text-muted);
+
+
+
+            font-weight: 600;
+
+
+
+            margin-bottom: 3px;
+
+
+
+            letter-spacing: 0.5px;
+
+
+
+        }
+
+
+
+        .stat-value {
+
+
+
+            font-size: 0.8rem;
+
+
+
+            font-weight: 700;
+
+
+
+            color: #fff;
+
+
+
+            line-height: 1.2;
+
+
+
+        }
+
+
+
+        .stat-value small {
+
+
+
+            font-size: 0.65rem;
+
+
+
+            font-weight: 600;
+
+
+
+        }
+
+
+
+        .exercise-desc {
+
+
+
+            font-size: 0.85rem;
+
+
+
+            color: var(--text-main);
+
+
+
+            margin-top: 8px;
+
+
+
+            line-height: 1.45;
+
+
+
+            background-color: rgba(0, 0, 0, 0.15);
+
+
+
+            padding: 10px;
+
+
+
+            border-radius: 8px;
+
+
+
+            border: 1px solid rgba(255, 255, 255, 0.01);
+
+
+
+        }
+
+
+
+        details {
+
+
+
+            margin-top: 10px;
+
+
+
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+
+
+            padding-top: 8px;
+
+
+
+        }
+
+
+
+        summary {
+
+
+
+            font-size: 0.8rem;
+
+
+
+            font-weight: 600;
+
+
+
+            color: var(--primary);
+
+
+
+            cursor: pointer;
+
+
+
+            list-style: none;
+
+
+
+            outline: none;
+
+
+
+            display: flex;
+
+
+
+            align-items: center;
+
+
+
+            gap: 6px;
+
+
+
+            user-select: none;
+
+
+
+        }
+
+
+
+        summary::-webkit-details-marker {
+
+
+
+            display: none;
+
+
+
+        }
+
+
+
+        summary::before {
+
+
+
+            content: "▶";
+
+
+
+            font-size: 0.65rem;
+
+
+
+            transition: transform 0.2s;
+
+
+
+            display: inline-block;
+
+
+
+        }
+
+
+
+        details[open] summary::before {
+
+
+
+            transform: rotate(90deg);
+
+
+
+        }
+
+
+
+        .instructions-content {
+
+
+
+            margin-top: 8px;
+
+
+
+            font-size: 0.8rem;
+
+
+
+            color: var(--text-muted);
+
+
+
+            background-color: rgba(0, 0, 0, 0.25);
+
+
+
+            padding: 10px;
+
+
+
+            border-radius: 8px;
+
+
+
+            border: 1px solid rgba(255, 255, 255, 0.02);
+
+
+
+            line-height: 1.4;
+
+
+
+        }
+
+
+
+        .instructions-content ol, .instructions-content ul {
+
+
+
+            margin-left: 18px;
+
+
+
+            margin-top: 5px;
+
+
+
+            margin-bottom: 5px;
+
+
+
+        }
+
+
+
+        .instructions-content li {
+
+
+
+            margin-bottom: 5px;
+
+
+
+        }
+
+
+
+        .tip-box {
+
+
+
+            margin-top: 6px;
+
+
+
+            border-left: 2px solid var(--accent-green);
+
+
+
+            padding-left: 8px;
+
+
+
+            color: #a7f3d0;
+
+
+
+            font-size: 0.78rem;
+
+
+
+        }
+
+
+
+        .warning-box {
+
+
+
+            margin-top: 6px;
+
+
+
+            border-left: 2px solid var(--accent-amber);
+
+
+
+            padding-left: 8px;
+
+
+
+            color: #fde68a;
+
+
+
+            font-size: 0.78rem;
+
+
+
+        }
+
+
+
+        .clinical-note {
+
+
+
+            background-color: rgba(245, 158, 11, 0.04);
+
+
+
+            border: 1px dashed rgba(245, 158, 11, 0.3);
+
+
+
+            border-radius: 12px;
+
+
+
+            padding: 14px;
+
+
+
+            margin-bottom: 20px;
+
+
+
+            font-size: 0.85rem;
+
+
+
+            color: #fef08a;
+
+
+
+            line-height: 1.4;
+
+
+
+        }
+
+
+
+        .clinical-note strong {
+
+
+
+            color: #fff;
+
+
+
+        }
+
+
+
+        .guide-card {
+
+
+
+            background-color: rgba(59, 130, 246, 0.02);
+
+
+
+            border: 1px solid var(--border);
+
+
+
+            border-radius: 14px;
+
+
+
+            padding: 16px;
+
+
+
+            margin-bottom: 20px;
+
+
+
+            font-size: 0.85rem;
+
+
+
+            color: var(--text-muted);
+
+
+
+            line-height: 1.4;
+
+
+
+        }
+
+
+
+        .guide-card h3 {
+
+
+
+            color: #fff;
+
+
+
+            margin-bottom: 8px;
+
+
+
+            font-size: 0.95rem;
+
+
+
+            display: flex;
+
+
+
+            align-items: center;
+
+
+
+            gap: 6px;
+
+
+
+        }
+
+
+
+        .guide-grid {
+
+
+
+            display: grid;
+
+
+
+            grid-template-columns: 1fr 1fr;
+
+
+
+            gap: 15px;
+
+
+
+            margin-top: 10px;
+
+
+
+        }
+
+
+
+        @media (max-width: 600px) {
+
+
+
+            .guide-grid {
+
+
+
+                grid-template-columns: 1fr;
+
+
+
+                gap: 10px;
+
+
+
+            }
+
+
+
+        }
+
+
+
+        .guide-item {
+
+
+
+            background-color: rgba(0,0,0,0.2);
+
+
+
+            padding: 12px;
+
+
+
+            border-radius: 8px;
+
+
+
+            border: 1px solid rgba(255,255,255,0.02);
+
+
+
+        }
+
+
+
+        .guide-item strong {
+
+
+
+            color: var(--primary);
+
+
+
+        }
+
+
+
+        /* Responsive stats for very narrow screens */
+
+
+
+        @media (max-width: 420px) {
+
+
+
+            .stat-pill {
+
+
+
+                flex: 1 1 calc(33.33% - 6px);
+
+
+
+            }
+
+
+
+        }
+
+
+
+    </style>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+    <div class="banner-container">
+
+
+
+        <img src="goalkeeper_banner.png" alt="Preparación Nico">
+
+
+
+        <div class="banner-overlay">
+
+
+
+            <h1>PREPARACIÓN NICO 2026/2027</h1>
+
+
+
+            <p>1,85 m | 85 kg | 29 años</p>
+
+
+
+            <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 2px;">Planificación de Fuerza Científica e Individualizada</p>
+
+
+
+            <span class="phase-badge">Fuerza y Rendimiento en Portería</span>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- GUÍA DE PESOS Y TIEMPOS -->
+
+
+
+    <div class="guide-card">
+
+
+
+        <h3>📖 GUÍA DE PESOS Y TIEMPOS DE EJECUCIÓN (TEMPO)</h3>
+
+
+
+        <p>Utiliza estas dos reglas para saber qué peso elegir y a qué velocidad moverlo en cada ejercicio:</p>
+
+
+
+        <div class="guide-grid">
+
+
+
+            <div class="guide-item">
+
+
+
+                <strong>¿Cómo elegir el peso? (Escala RIR):</strong><br>
+
+
+
+                • <strong>RIR 2:</strong> Deja 2 repeticiones en recámara (es decir, detén la serie cuando te falten 2 para llegar al fallo técnico).<br>
+
+
+
+                • <strong>RIR 1-2:</strong> Carga más exigente. Quédate a 1 o 2 repeticiones del fallo.<br>
+
+
+
+                • <strong>Descansos:</strong> Respeta los tiempos pautados para maximizar la resíntesis de ATP y asegurar la calidad de la siguiente serie.
+
+
+
+            </div>
+
+
+
+            <div class="guide-item">
+
+
+
+                <strong>¿Cómo leer el Tempo? (Ej. 4-0-1-0):</strong><br>
+
+
+
+                • <strong>4:</strong> Baja el peso lentamente controlando la gravedad (4 seg).<br>
+
+
+
+                • <strong>0:</strong> Sin pausa en la posición de estiramiento.<br>
+
+
+
+                • <strong>1:</strong> Empuja o sube el peso tan rápido y explosivo como puedas (1 seg).<br>
+
+
+
+                • <strong>0:</strong> Sin pausa en la parte inicial.
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="clinical-note">
+
+
+
+        <strong>⚠️ Adaptación de Lesiones y Clínicas:</strong><br>
+
+
+
+        • <strong>Hombro Derecho:</strong> Prohibido Press Militar vertical con barra. Adaptado a Press Inclinado con Mancuerna (45°) y Landmine Press.<br>
+
+
+
+        • <strong>Tendón Rotuliano:</strong> Evitamos impactos directos fuertes y sentadillas traseras libres en volumen. Empleamos isometría pesada y control excéntrico en Prensa/Multipower.
+
+
+
+    </div>
+
+
+
+    <div class="tab-container">
+
+
+
+        <button class="tab-btn active" onclick="switchBlock('blockA')">Semanas 1-4 (Bloque A)</button>
+
+
+
+        <button class="tab-btn" onclick="switchBlock('blockB')">Semanas 5-8 (Bloque B)</button>
+
+
+
+        <button class="tab-btn" onclick="switchBlock('phase1')">Pretemporada (Agosto)</button>
+
+
+
+    </div>
+
+
+
+    <!-- BLOQUE A -->
+
+
+
+    <div id="blockA" class="block-section active">
+
+
+
+        <!-- DÍA 1 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 1 (Lunes)</div>
+
+
+
+                <div class="day-subtitle">Fuerza Pierna (Estructural) y Cadena Posterior</div>
+
+
+
+            <div class="test-notice-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.8rem; line-height: 1.4; color: #e0f2fe; display: flex; align-items: center; gap: 10px;">
+
+                <span style="font-size: 1.25rem;">📊</span>
+
+                <div><strong>DÍA DE TEST MENSUAL (Semana 1):</strong> Realiza los tests de rendimiento (CMJ, SJ, RSI, Salto Lateral, Sprint 10m) antes de comenzar esta sesión de gimnasio o el sábado por la mañana. Registra tus marcas en el historial.</div>
+
+            </div>
+
+
+
+            </div>
+
+
+
+            
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Movilidad 90/90 de Cadera</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Siéntate en el suelo con ambas rodillas dobladas en un ángulo de 90 grados (una pierna hacia adelante y la otra hacia el costado). Inclina el torso suavemente sobre la pierna delantera para estirar la articulación profunda de la cadera.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Movilidad de Tobillo contra Pared</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Colócate de pie frente a una pared a unos 10 cm. Empuja la rodilla hacia adelante buscando tocar la pared sin levantar el talón del suelo. Sirve para ganar flexibilidad y mejorar la profundidad de los apoyos.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Sentadilla Búlgara Isométrica</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">30-40s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">25-30 kg</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sugerido: 2 mancuernas de 15-20kg (30-40kg total). Apoya un pie atrás en un banco. Flexiona la pierna delantera hasta que el muslo esté paralelo al suelo y quédate completamente inmóvil. Actúa como analgésico para las rodillas.</div>
+
+
+
+                <details>
+
+
+
+                    <summary>Instrucciones y Claves técnicas</summary>
+
+
+
+                    <div class="instructions-content">
+
+
+
+                        <strong>Ejecución técnica:</strong>
+
+
+
+                        <ol>
+
+
+
+                            <li>Mantén el torso levemente inclinado al frente para repartir la carga.</li>
+
+
+
+                            <li>No dejes que la rodilla delantera se balancee hacia los lados.</li>
+
+
+
+                        </ol>
+
+
+
+                        <div class="tip-box"><strong>Clave Portero:</strong> Fortalecer el tendón rotuliano mediante isometría pesada, eliminando el dolor en apoyos fuertes.</div>
+
+
+
+                    </div>
+
+
+
+                </details>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Drop Landings (Absorción de Impacto)</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Excéntrico</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Déjate caer desde un cajón de 30-40cm y clava la caída amortiguando con flexión de rodillas a 90° de forma suave pero firme en 0.5s.</div>
+
+
+
+                <details>
+
+
+
+                    <summary>Instrucciones de ejecución</summary>
+
+
+
+                    <div class="instructions-content">
+
+
+
+                        <div class="warning-box"><strong>Cuidado con:</strong> No saltes hacia arriba, déjate caer y absorbe la inercia flexionando rodillas sin valgo (que no vayan hacia adentro).</div>
+
+
+
+                    </div>
+
+
+
+                </details>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Prensa Inclinada de Piernas</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">90-100 kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">4-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">En la máquina de prensa inclinada, baja la plataforma muy lentamente contando **4 segundos enteros** hasta que las rodillas estén a 90 grados. Empuja con fuerza hacia arriba de forma explosiva (1 segundo).</div>
+
+
+
+                <details>
+
+
+
+                    <summary>Instrucciones de ejecución</summary>
+
+
+
+                    <div class="instructions-content">
+
+
+
+                        <div class="tip-box"><strong>Clave Portero:</strong> Desarrollo de fuerza estructural de cuádriceps sin cargar la zona lumbar. El tempo lento estimula la salud del tendón rotuliano.</div>
+
+
+
+                        <div class="warning-box"><strong>Cuidado con:</strong> No estires las rodillas al 100% al final (no bloquees la articulación) y mantén el glúteo apoyado en el asiento.</div>
+
+
+
+                    </div>
+
+
+
+                </details>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie A)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie A1</span>
+
+
+
+                        <span class="exercise-name">Peso Muerto Rumano (Barra o Mancuernas)</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">65-70 kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sujeta la barra frente a ti, inclina el torso hacia adelante empujando tu cadera hacia atrás y doblando muy levemente las rodillas. Baja rozando tus piernas en **3 segundos** y sube fuerte en 1 segundo apretando glúteos. Descansa 45 segundos y pasa a A2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie A2</span>
+
+
+
+                        <span class="exercise-name">Press de Banca Inclinado con Mancuernas</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">14-16 kg/mano<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Túmbate en un banco inclinado a unos 30-45 grados. Baja las mancuernas despacio en **3 segundos** y empújalas en 1 segundo manteniendo los codos a 45° respecto al torso. Usa un agarre semi-neutro. Descansa 90 segundos antes de volver a A1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core y Estabilización (Frenado Rotacional)</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Press Pallof en Polea</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Estabilización</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">12/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">25-30 kg</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2s Isom.</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">De pie, ponte de lado a una polea a la altura del pecho. Agarra el cable con ambas manos contra tu pecho, da un paso al lado para tensarlo, y empuja las manos hacia adelante en línea recta manteniendo los brazos estirados 2 segundos sin dejar que la polea gire tu torso.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- DÍA 2 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 2 (Miércoles)</div>
+
+
+
+                <div class="day-subtitle">Espalda Pesada y Estabilidad Unilateral</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Dislocaciones de Hombro con Pica</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Pica / Palo</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sujeta un palo de escoba o pica con un agarre bien ancho frente a ti. Levanta los brazos rectos por encima de tu cabeza y llévalos hacia atrás hasta la altura de tu lumbar de forma fluida, y regresa. Sirve para flexibilizar y lubricar el hombro lesionado.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Rotación Torácica en Cuadrupedia</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Colócate a cuatro patas en el suelo. Lleva una mano detrás de tu cabeza y gira el codo y el torso hacia arriba buscando el techo, y luego desciende cruzando el codo hacia el brazo contrario. Moviliza la columna torácica que es clave para tus estiradas aéreas.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Y-T-W en Banco Inclinado</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/letra</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Túmbate boca abajo en un banco inclinado a 30° con el pecho apoyado. Levanta los brazos sin peso imitando con el cuerpo la forma de la letra Y (pulgares arriba), luego la letra T (brazos en cruz) y la letra W (doblando codos y tirando de ellos hacia atrás). Estabiliza las escápulas.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Puente de Glúteo a una Pierna</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">12/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Túmbate boca arriba en el suelo con las rodillas dobladas y pies planos. Eleva una pierna estirada hacia arriba y empuja con el talón de la otra apoyada para levantar tu cadera del suelo apretando el glúteo en la cima. Activa la cadena posterior de forma unilateral.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Skater Jumps con Recepción Clavada (2s)</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">4/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explo + 2s Hold</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Salta lateralmente de forma explosiva y oblígate a frenar en seco sosteniendo la caída en apoyo unilateral durante 2 segundos antes de saltar al otro lado.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Dominadas Supinas (o Jalón Neutro)</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">45 kg / Polea<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Cuelga de la barra con las palmas mirándote. Sube fuerte en 1 segundo llevando el pecho arriba, y baja muy despacio tardando **3 segundos** completos en descender. Si no puedes realizar dominadas a 3s excéntricas, usa jalón al pecho con agarre neutro.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie B)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie B1</span>
+
+
+
+                        <span class="exercise-name">Sentadilla Búlgara Dinámica (Smith o Mancuernas)</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/pierna</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">8-10 kg/mano<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Con un pie atrás apoyado en banco, desciende la rodilla trasera hacia el suelo doblando la delantera en **2 segundos** y sube fuerte en 1 segundo de forma fluida. Descansa 45 segundos y pasa a B2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie B2</span>
+
+
+
+                        <span class="exercise-name">Remo Apoyado en Banco con Mancuernas</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">10-12 kg/mano<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Tumbado boca abajo en banco inclinado a 30°. Tira de los codos hacia atrás y arriba pegados a tus costados en 1 segundo. Baja en 2 segundos de forma controlada. Descansa 90 segundos antes de volver a B1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core y Blindaje (Aductores/Pubalgia)</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Plancha Abdominal Extendida</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Blindaje</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">40 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Apoya los antebrazos en el suelo pero colócalos bastante más adelante de lo habitual (al nivel de tu frente o tus ojos). Contrae glúteos y abdomen para mantener el cuerpo recto como una tabla, resistiendo la tendencia a arquear la lumbar.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Plancha Copenhague (Aductores)</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Blindaje</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">20-30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Plancha lateral en el suelo con la pierna de arriba apoyada sobre un banco o silla. Eleva la cadera y mantén el cuerpo alineado de forma isométrica. Fortalece los aductores para evitar pubalgias en golpeos y estiradas.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- DÍA 3 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 3 (Viernes)</div>
+
+
+
+                <div class="day-subtitle">Aceleración y Empujes Potentes</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Gato-Camello (Cat-Camel)</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Arquear y hundir la columna en cuadrupedia para flexibilizar lumbares y espalda alta de forma rítmica.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Estiramiento Dinámico de Aductores</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Movilidad lateral de cadera apoyando una rodilla en el suelo y la otra pierna estirada al costado. Desplaza el peso hacia atrás suavemente.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Curl Femoral en Máquina</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Medio<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Tumbado boca abajo en la máquina, flexiona las piernas llevando los rodillos a tus glúteos, y baja de forma muy controlada y lenta resistiendo el peso (3s de bajada). Calienta los isquiotibiales antes de la velocidad.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Aceleración Resistida con Banda o Trineo</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Distancia</span><span class="stat-value">15 m</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Goma/Trineo</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explosivo</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Desde posición de alerta de portero, acelera al 100% de intensidad lineal en una distancia corta de 15 metros. **Descansa 2 minutos completos** paseando para recuperar el sistema fosfágeno antes del siguiente sprint.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Landmine Press a un Brazo</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Barra + 15kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">De pie, sujeta el extremo de una barra que está anclada al suelo. Empuja de forma explosiva en diagonal hacia adelante y arriba (1 segundo). Baja de forma controlada en 2 segundos. Protege tu hombro derecho al empujar en diagonal.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie C)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie C1</span>
+
+
+
+                        <span class="exercise-name">Sentadilla Goblet Profunda</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">12</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Manc. 24-28kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sujeta la mancuerna pegada a tu pecho de forma vertical. Baja muy lento en **3 segundos** de forma profunda (coloca una pequeña cuña en los talones si te falta flexibilidad en el tobillo), sube rápido en 1 segundo. Descansa 45s y pasa a C2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie C2</span>
+
+
+
+                        <span class="exercise-name">Cossack Squat con Mancuerna</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Manc. 12-16kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Zancada lateral profunda. Carga el peso sobre tu cadera y mantén el talón del pie de apoyo plano, permitiendo que la punta del otro pie mire al techo. Mantén el torso vertical y rota externamente la pierna estirada (punta del pie arriba). Descansa 90s antes de volver a C1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Leñador (Woodchopper) en Polea Alta</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">12/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Polea (Medio)</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explosivo</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Gira el torso usando la fuerza de tu cadera y pivotando el pie trasero para transferir potencia y proteger la lumbar. Mantén los brazos estirados tirando del cable en diagonal de arriba a abajo.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- BLOQUE B -->
+
+
+
+    <div id="blockB" class="block-section">
+
+
+
+        <!-- DÍA 1 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 1 (Lunes)</div>
+
+
+
+                <div class="day-subtitle">Fuerza Piernas e Inclinado Pesado</div>
+
+
+
+            <div class="test-notice-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.8rem; line-height: 1.4; color: #e0f2fe; display: flex; align-items: center; gap: 10px;">
+
+                <span style="font-size: 1.25rem;">📊</span>
+
+                <div><strong>DÍA DE TEST MENSUAL (Semana 5):</strong> Realiza los tests de rendimiento (CMJ, SJ, RSI, Salto Lateral, Sprint 10m) antes de comenzar esta sesión de gimnasio o el sábado por la mañana. Registra tus marcas en el historial.</div>
+
+            </div>
+
+
+
+            </div>
+
+
+
+            
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Movilidad 90/90 de Cadera</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sentado en el suelo, rodillas a 90 grados, girar el torso hacia la pierna delantera para ganar amplitud de rotación.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Movilidad de Tobillo contra Pared</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Empujar la rodilla delantera buscando la pared sin levantar el talón del suelo.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Sentadilla Búlgara Isométrica</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">25s/pierna</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">40-50 kg</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Posición estática abajo con un pie en banco, sosteniendo mancuernas pesadas para aumentar la resistencia y preparar el tendón rotuliano ante cargas elevadas.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Curl Nórdico Excéntrico</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación / Prehab</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">5</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">75 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Excéntrico (5s)</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Baja lo más lento posible en 5 segundos controlado. Ayúdate de los brazos para volver arriba de forma concéntrica. Fortalece el isquio como flexor de rodilla protegiendo tu articulación.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Drop Landings (Absorción de Impacto)</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Excéntrico</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Déjate caer desde un cajón de 30-40cm y clava la caída amortiguando con flexión de rodillas a 90° de forma suave pero firme en 0.5s.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Sentadilla Smith (o Prensa Inclinada)</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6-8</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Alta (+15%)<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sentadillas en Multipower con pies ligeramente adelantados para enfatizar cuádriceps sin cizalla en rodillas, o Prensa Inclinada muy pesada. Aumentar carga semanalmente.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie A)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie A1</span>
+
+
+
+                        <span class="exercise-name">Peso Muerto Rumano con Barra</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">75-85 kg<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Usa la barra libre normal. Carga pesada con técnica estricta. Baja en 3 segundos sintiendo el estiramiento de los isquios y sube en 1 segundo apretando glúteos. Descansa 45s y pasa a A2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie A2</span>
+
+
+
+                        <span class="exercise-name">Press de Banca Inclinado con Mancuernas</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">26-30 kg/mano<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Press inclinado pesado con mancuernas, codos metidos a 45 grados y agarre semi-neutro. Baja en 3 segundos y empuja fuerte en 1. Descansa 90s antes de volver a A1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core y Estabilización (Frenado Rotacional)</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Press Pallof en Polea (Alta)</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Estabilización</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Mayor Carga<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Resistir la rotación con mayor peso en la polea, manteniendo el abdomen y los glúteos fuertemente contraídos.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- DÍA 2 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 2 (Miércoles)</div>
+
+
+
+                <div class="day-subtitle">Tracción Pesada e Inestabilidad Lateral</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Dislocaciones de Hombro con Pica</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Pica</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Pasar el palo por encima de la cabeza y hacia atrás manteniendo codos rectos de forma suave y controlada.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Rotación Torácica en Cuadrupedia</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Girar el codo hacia el techo desde posición a cuatro patas para flexibilizar la columna.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Y-T-W con Mancuernas Ligeras</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">1-2 kg/mano</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Ejecutar el movimiento Y-T-W boca abajo en banco inclinado con mancuernas de 1 o 2 kg para activar los estabilizadores escapulares.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Puente de Glúteo a una Pierna</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">12/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Empujar cadera hacia el techo con un solo talón apoyado, glúteo apretado en la parte superior.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Skater Jumps con Recepción Clavada</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">4/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explo + 2s Hold</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Salta lateralmente de forma explosiva y oblígate a frenar en seco sosteniendo la caída en apoyo unilateral durante 2 segundos antes de saltar al otro lado.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Dominadas Neutras Lastradas</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">+7.5-12.5 kg<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Dominadas con las palmas mirándose. Sube de forma explosiva en 1 segundo y baja muy controlado en 3 segundos. Usa cinturón de lastre o sujeta una mancuerna.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie B)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie B1</span>
+
+
+
+                        <span class="exercise-name">Sentadilla Búlgara con Mancuernas Pesadas</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6/pierna</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">20-24 kg/mano<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Búlgaras dinámicas con cargas altas exigiendo el máximo control. Baja en 2 segundos, sube en 1 de forma vertical. Descansa 45s y pasa a B2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie B2</span>
+
+
+
+                        <span class="exercise-name">Remo Unilateral en Polea Baja</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Polea (Alta)<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Sujeta la polea en posición de zancada isométrica baja (sin moverte) y tira de ella hacia tus costillas rotando levemente el torso. Descansa 90s antes de volver a B1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core y Blindaje (Aductores/Pubalgia)</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Plancha con Toques de Hombros</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Blindaje</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">En posición de flexión de brazos, toca alternativamente tu hombro derecho con la mano izquierda (y viceversa) controlando que la cadera no se tambalee ni gire hacia los lados.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Plancha Copenhague (Aductores)</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core y Blindaje</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tiempo</span><span class="stat-value">20-30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Plancha lateral en el suelo con la pierna de arriba apoyada sobre un banco o silla. Eleva la cadera y mantén el cuerpo alineado de forma isométrica. Fortalece los aductores para evitar pubalgias en golpeos y estiradas.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- DÍA 3 -->
+
+
+
+        <div class="day-container">
+
+
+
+            <div class="day-header">
+
+
+
+                <div class="day-title">DÍA 3 (Viernes)</div>
+
+
+
+                <div class="day-subtitle">Empuje Potente y Cadena Posterior</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">1. Movilidad</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Gato-Camello (Cat-Camel)</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Arquear y hundir la columna en cuadrupedia para flexibilizar lumbares y espalda alta.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Estiramiento Dinámico de Aductores</span>
+
+
+
+                    <span class="exercise-type-tag type-movilidad">Movilidad</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">30 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Fluido</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Movilidad lateral de cadera apoyando una rodilla y la otra pierna estirada al costado.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">2. Activación / Prehab</div>
+
+
+
+            <div class="exercise-card warmup">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Curl de Isquios en Fitball (o Deslizadores)</span>
+
+
+
+                    <span class="exercise-type-tag type-activacion">Activación / Prehab</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10-12</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Controlado</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Boca arriba con rodillas dobladas y pies apoyados en fitball. Eleva cadera y flexiona rodillas deslizando talones sobre el fitball o deslizadores. Menor daño excéntrico acumulativo de cara al fin de semana.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">3. Velocidad y Desaceleración</div>
+
+
+
+            <div class="exercise-card plyo">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Aceleración Resistida con Banda o Trineo</span>
+
+
+
+                    <span class="exercise-type-tag type-pliometria">Velocidad y Desaceleración</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Distancia</span><span class="stat-value">15 m</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Goma/Trineo</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explosivo</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Carrera explosiva corta al 100% de velocidad. Descanso largo de 2 minutos paseando y respirando.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">4. Fuerza Principal</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Landmine Press Pesado</span>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza Principal</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">4</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Barra + 17.5-22.5kg<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Empuje diagonal de pie con barra libre pesada en esquina. Foco en trasladar de forma explosiva la fuerza del empuje de piernas y cadera a la mano.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">5. Fuerza Accesoria (Superserie C)</div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie C1</span>
+
+
+
+                        <span class="exercise-name">Peso Muerto Hex Bar (o Convencional)</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">5</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">110-130 kg<br><small style="color:var(--accent-amber)">RIR 2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">1-1-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Tracción vertical pesada desde el suelo con la barra hexagonal. Foco en fuerza rápida/potencia: tirón explosivo en 1 segundo y sostener 1 segundo arriba. Descansa 45s y pasa a C2.</div>
+
+
+
+            </div>
+
+
+
+            <div class="exercise-card">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <div class="exercise-name-container">
+
+
+
+                        <span class="superserie-badge">Superserie C2</span>
+
+
+
+                        <span class="exercise-name">Cossack Squat con Mancuerna</span>
+
+
+
+                    </div>
+
+
+
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Manc. 14-18kg<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Zancada lateral profunda. Carga el peso sobre tu cadera y mantén el talón del pie de apoyo plano, permitiendo que la punta del otro pie mire al techo. Mantén el torso vertical y rota externamente la pierna estirada (punta del pie arriba). Descansa 90s antes de volver a C1.</div>
+
+
+
+            </div>
+
+
+
+            <div class="block-title">6. Core</div>
+
+
+
+            <div class="exercise-card core">
+
+
+
+                <div class="exercise-header">
+
+
+
+                    <span class="exercise-name">Leñador en Polea Alta</span>
+
+
+
+                    <span class="exercise-type-tag type-core">Core</span>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-stats">
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Mayor Carga<br><small style="color:var(--accent-amber)">RIR 1-2</small></span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+
+
+
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explosivo</span></div>
+
+
+
+                </div>
+
+
+
+                <div class="exercise-desc">Gira el torso usando la fuerza de tu cadera y pivotando el pie trasero para transferir potencia y proteger la lumbar. Fuerza rotacional explosiva.</div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    
+    <!-- ACONDICIONAMIENTO DE CARRERA (JULIO) -->
+    <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 12px; padding: 20px; margin-top: 30px; margin-bottom: 30px; backdrop-filter: blur(8px);">
+        <h3 style="color: var(--accent-amber); margin-top: 0; margin-bottom: 8px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+            <span>🏃‍♂️</span> Acondicionamiento de Carrera en Julio (Semanas 5 a 7)
+        </h3>
+        <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.4; margin-top: 0; margin-bottom: 15px;">
+            <strong>Objetivo:</strong> Adaptar isquiotibiales y gemelos a la carrera lineal a alta velocidad antes del campo de pretemporada. Jugar al pádel solo entrena distancias cortas; el fútbol requiere sprints largos.
+        </p>
+        <ul style="color: #cbd5e1; font-size: 0.8rem; line-height: 1.5; padding-left: 20px; margin-bottom: 0;">
+            <li><strong>Frecuencia:</strong> 2 sesiones semanales (Martes y Sábados por la mañana, 15 min).</li>
+            <li><strong>Sprints Progresivos Lineales:</strong> 2 series de 4 reps de 20 metros a velocidad progresiva (de 60% a 90% del máximo). Decelera suavemente en los últimos 5 metros. Camina de vuelta (60s).</li>
+            <li><strong>Aceleración y Frenada de Portero:</strong> 2 series de 3 reps de sprint de 5m al frente, frena en seco en posición básica, desplazamiento lateral de 3m y salto explosivo arriba. Recupera 90s.</li>
+        </ul>
+    </div>
+
+    <!-- PHASE 1: PRETEMPORADA -->
+    <div id="phase1" class="block-section">
+        
+        
+        <!-- ONDULACIÓN Y WELLNESS -->
+        <div style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 25px;">
+            <h4 style="color: var(--accent-blue); margin-top: 0; margin-bottom: 8px; font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                <span>🎛️</span> Ondulación de Cargas y Autorregulación en Pretemporada
+            </h4>
+            <ul style="color: #cbd5e1; font-size: 0.8rem; line-height: 1.5; padding-left: 20px; margin-bottom: 0;">
+                <li><strong>Semanas con 2 Partidos (Sem 9, 11 y 12):</strong> Omitir el Día 3 (PAP) y reducir el volumen general al 50% por la carga acumulada del campo.</li>
+                <li><strong>Semanas con 1 Partido (Sem 10 y 13):</strong> Realizar la rutina completa programada (Días 1 y 2).</li>
+                <li><strong>Autorregulación Interactiva:</strong> Utiliza el Test Wellness antes de cada sesión en el panel. Si la puntuación es menor a 12, el sistema recomendará reducir el volumen a la mitad o realizar únicamente movilidad y core.</li>
+            </ul>
+        </div>
+
+    <!-- CALENDARIO DE PRETEMPORADA -->
+        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 30px; backdrop-filter: blur(8px);">
+            <h3 style="color: var(--accent-blue); margin-top: 0; margin-bottom: 8px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                <span>📅</span> Calendario de Pretemporada (Sincronizado con el Equipo)
+            </h3>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0; margin-bottom: 20px; line-height: 1.4;">
+                Las 6 semanas de pretemporada oficial del 1º Equipo. Los entrenamientos de fuerza están sincronizados para asegurar un mínimo de 48h de recuperación antes de cualquier partido amistoso de alta intensidad y adaptados biomecánicamente para portero.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                
+                <!-- Semana 1 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid var(--accent-green);">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 1 (30/07 - 02/08)</span>
+                        <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.1); color: var(--accent-green); padding: 2px 6px; border-radius: 4px;">Contacto</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> Descanso / Movilidad</li>
+                        <li><strong>Martes:</strong> 🏋️‍♂️ Gym Día 1 (Fuerza Piernas)</li>
+                        <li><strong>Miércoles:</strong> 🏋️‍♂️ Gym Día 2 (Fuerza Superior)</li>
+                        <li><strong>Jueves:</strong> ⚽ Campo (20:00)</li>
+                        <li><strong>Viernes:</strong> ⚡ Gym Día 3 (PAP) + Campo (20:00)</li>
+                        <li style="color: #64748b;"><strong>Sábado/Domingo:</strong> Descanso Total</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 2 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid #f59e0b;">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 2 (03/08 - 09/08)</span>
+                        <span style="font-size: 0.75rem; background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 2px 6px; border-radius: 4px;">Campo / 1 Partido</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> 🏋️‍♂️ Gym Día 2 (Torso) + Campo (20:00)</li>
+                        <li><strong>Martes:</strong> ⚽ Campo Santa Cruz (20:00)</li>
+                        <li><strong>Miércoles:</strong> 🏋️‍♂️ Gym Día 1 (Piernas - 2 sets) + Campo (20:00) — <em>(Aboño cancelado)</em></li>
+                        <li><strong>Jueves:</strong> ⚽ Campo Santa Cruz (20:00)</li>
+                        <li><strong>Viernes:</strong> ⚡ Gym Día 3 (PAP) + Campo (20:00)</li>
+                        <li><strong>Sábado:</strong> ⚽ <strong>Partido vs SD Navarro</strong> (20:00)</li>
+                        <li style="color: #64748b;"><strong>Domingo:</strong> Descanso Total</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 3 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid var(--accent-green);">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 3 (10/08 - 16/08)</span>
+                        <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.1); color: var(--accent-green); padding: 2px 6px; border-radius: 4px;">Carga / 1 Partido</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> 🏋️‍♂️ Gym Día 2 (Torso) + Campo (19:00)</li>
+                        <li><strong>Martes:</strong> ⚽ Campo Santa Cruz (19:00)</li>
+                        <li><strong>Miércoles:</strong> 🏋️‍♂️ Gym Día 1 (Piernas - 2 sets) + Campo (19:00)</li>
+                        <li><strong>Jueves:</strong> ⚡ Gym Día 3 (PAP) + Campo (19:00)</li>
+                        <li><strong>Viernes:</strong> ⚽ <strong>Partido vs Uni Oviedo</strong> (18:45)</li>
+                        <li style="color: #64748b;"><strong>Sábado/Domingo:</strong> Descanso Total</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 4 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid #f59e0b;">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 4 (17/08 - 23/08)</span>
+                        <span style="font-size: 0.75rem; background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 2px 6px; border-radius: 4px;">Doble Partido (2)</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> ⚽ Campo Santa Cruz (19:00)</li>
+                        <li><strong>Martes:</strong> ⚽ <strong>Partido vs TSK Roces DH</strong> (19:00)</li>
+                        <li><strong>Miércoles:</strong> Descanso / Recuperación</li>
+                        <li><strong>Jueves:</strong> 🏋️‍♂️ Gym Día 2 (Torso) + Campo (19:00)</li>
+                        <li><strong>Viernes:</strong> ⚡ Gym Día 3 (PAP) + Campo (19:00)</li>
+                        <li><strong>Sábado:</strong> ⚽ <strong>Partido vs C. Condal</strong> (20:00)</li>
+                        <li style="color: #64748b;"><strong>Domingo:</strong> Descanso Total</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 5 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid #f59e0b;">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 5 (24/08 - 30/08)</span>
+                        <span style="font-size: 0.75rem; background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 2px 6px; border-radius: 4px;">Doble Partido (2)</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> ⚽ Campo Santa Cruz (19:00)</li>
+                        <li><strong>Martes:</strong> 🏋️‍♂️ Gym Día 1 (Piernas) + Campo (19:00) (Margen 48h)</li>
+                        <li><strong>Miércoles:</strong> Descanso / Recuperación</li>
+                        <li><strong>Jueves:</strong> ⚽ <strong>Partido vs Avilés Stadium</strong> (19:00)</li>
+                        <li><strong>Viernes:</strong> 🏋️‍♂️ Gym Día 2 (Torso) + Campo (19:00)</li>
+                        <li><strong>Sábado:</strong> ⚽ <strong>Partido vs CD Covadonga</strong> (19:30)</li>
+                        <li style="color: #64748b;"><strong>Domingo:</strong> Descanso Total</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 6 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid var(--accent-blue);">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 6 (31/08 - 06/09)</span>
+                        <span style="font-size: 0.75rem; background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px;">Competitiva</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> ⚽ Campo Santa Cruz (19:00)</li>
+                        <li><strong>Martes:</strong> 🏋️‍♂️ Gym Día 2 (Torso) + Campo (19:00)</li>
+                        <li><strong>Miércoles:</strong> Descanso / Recuperación</li>
+                        <li><strong>Jueves:</strong> 🏋️‍♂️ Gym Día 1 (Piernas) + Campo (19:00) (Margen 72h)</li>
+                        <li><strong>Viernes:</strong> ⚡ Gym Día 3 (PAP) + Campo (19:00)</li>
+                        <li><strong>Sábado:</strong> Descanso / Activación suave</li>
+                        <li style="color: var(--accent-blue); font-weight: bold;"><strong>Domingo:</strong> ⚽ JORNADA 1 (LIGA)</li>
+                    </ul>
+                </div>
+
+                <!-- Semana 7 -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 10px; padding: 15px; border-left: 4px solid var(--accent-blue);">
+                    <div style="font-weight: bold; color: #f1f5f9; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Semana 7 (07/09 - 13/09)</span>
+                        <span style="font-size: 0.75rem; background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px;">Competitiva</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+                        <li><strong>Lunes:</strong> Descanso absoluto</li>
+                        <li><strong>Martes:</strong> 🏋️‍♂️ Gym Día 2 (Torso/Core)</li>
+                        <li><strong>Miércoles:</strong> ⚽ Campo Santa Cruz (19:00)</li>
+                        <li><strong>Jueves:</strong> 🏋️‍♂️ Gym Día 1 (Piernas) + Campo (19:00) (Margen 72h)</li>
+                        <li><strong>Viernes:</strong> ⚡ Gym Día 3 (PAP) (Mañana).</li>
+                        <li><strong>Sábado:</strong> ⚽ Campo Mañana (10:00)</li>
+                        <li style="color: var(--accent-blue); font-weight: bold;"><strong>Domingo:</strong> ⚽ JORNADA 2 (LIGA)</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        <!-- DÍA 1 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-title">DÍA 1: Fuerza Pierna y Cadera Lateral</div>
+                <div class="day-subtitle">Mantenimiento Estructural y Caídas (Volumen de Pretemporada)</div>
+            </div>
+            
+            <div class="test-notice-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.8rem; line-height: 1.4; color: #e0f2fe; display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.25rem;">📊</span>
+                <div><strong>DÍA DE TEST MENSUAL (Semana 9):</strong> Realiza los tests de rendimiento (CMJ, SJ, RSI, Salto Lateral, Sprint 10m) antes de comenzar esta sesión de gimnasio o el sábado por la mañana. Registra tus marcas en el historial.</div>
+            </div>
+
+            <div class="block-title">1. Activación / Prehab</div>
+            <div class="exercise-card warmup">
+                <div class="exercise-header">
+                    <span class="exercise-name">Sentadilla Búlgara Isométrica</span>
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">20s/pierna</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">20-25 kg</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+                </div>
+                <div class="exercise-desc">Isometría para despertar los mecanorreceptores del tendón rotuliano sin generar fatiga residual.</div>
+            </div>
+
+            <div class="block-title">2. Fuerza Principal y Landing</div>
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Prensa Inclinada de Piernas</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6-8</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">90-100 kg<br><small style="color:var(--accent-green)">RIR 3</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+                </div>
+                <div class="exercise-desc">Controla la bajada excéntrica (3 segundos) y empuja explosivamente. Mantiene la fuerza de empuje.</div>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Step-Downs Excéntricos</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza/Landing</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/pierna</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">4-0-1-0</span></div>
+                </div>
+                <div class="exercise-desc">De pie en caja baja, desciende un pie lentamente (4s) rozando talón y sube rápido. Estabilidad de rodilla de caídas unilaterales.</div>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Peso Muerto Rumano</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">65-70 kg<br><small style="color:var(--accent-green)">RIR 3</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">3-0-1-0</span></div>
+                </div>
+                <div class="exercise-desc">Mantén la tensión en isquiotibiales y glúteos. Espalda neutra en todo el rango.</div>
+            </div>
+
+            <div class="block-title">3. Core y Cadera Lateral (Superserie)</div>
+            <div class="exercise-card core">
+                <div class="exercise-header">
+                    <div class="exercise-name-container">
+                        <span class="superserie-badge">Superserie A1</span>
+                        <span class="exercise-name">Press Pallof en Polea</span>
+                    </div>
+                    <span class="exercise-type-tag type-core">Core</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">25-30 kg<br><small style="color:var(--accent-green)">RIR 2</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2s Isom.</span></div>
+                </div>
+                <div class="exercise-desc">Estabilidad de core antirrotación. Pasa de inmediato a A2.</div>
+            </div>
+
+            <div class="exercise-card core">
+                <div class="exercise-header">
+                    <div class="exercise-name-container">
+                        <span class="superserie-badge">Superserie A2</span>
+                        <span class="exercise-name">Monster Walks con Banda</span>
+                    </div>
+                    <span class="exercise-type-tag type-core">Estabilidad</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">10m/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Banda</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Paso a Paso</span></div>
+                </div>
+                <div class="exercise-desc">Banda en rodillas, paso lateral en media sentadilla. Activa el glúteo medio para evitar valgo de rodilla en estiradas.</div>
+            </div>
+        </div>
+
+        <!-- DÍA 2 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-title">DÍA 2: Fuerza Superior y Estabilidad Escapular</div>
+                <div class="day-subtitle">Estabilidad Escapular y Hombro Aéreo</div>
+            </div>
+
+            <div class="block-title">1. Activación / Prehab / Hombro</div>
+            <div class="exercise-card warmup">
+                <div class="exercise-header">
+                    <span class="exercise-name">Y-T-W en Banco Inclinado</span>
+                    <span class="exercise-type-tag type-activacion">Activación</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8/letra</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">45 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+                </div>
+                <div class="exercise-desc">Activación de la cintura escapular y trapecios para robustecer el hombro frente a caídas e impactos.</div>
+            </div>
+
+            <div class="exercise-card warmup">
+                <div class="exercise-header">
+                    <span class="exercise-name">Overhead Carry (Paseo de Hombro)</span>
+                    <span class="exercise-type-tag type-activacion">Hombro</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">20m/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">10-12 kg</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Caminar</span></div>
+                </div>
+                <div class="exercise-desc">Caminar con brazo extendido vertical y hombro encajado (sin dolor). Rehabilitación de hombro derecho para blocajes aéreos.</div>
+            </div>
+
+            <div class="block-title">2. Fuerza Principal</div>
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Dominadas Supinas (o Jalón)</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Autocarga<br><small style="color:var(--accent-green)">RIR 3</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+                </div>
+                <div class="exercise-desc">Tracción vertical fluida y explosiva en la fase concéntrica.</div>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Remo Apoyado en Banco Manc.</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">8</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">22-26 kg<br><small style="color:var(--accent-green)">RIR 3</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">2-0-1-0</span></div>
+                </div>
+                <div class="exercise-desc">Tracción horizontal estable para evitar compensaciones de espalda baja.</div>
+            </div>
+
+            <div class="block-title">3. Core / Blindaje</div>
+            <div class="exercise-card core">
+                <div class="exercise-header">
+                    <span class="exercise-name">Plancha Copenhague (Aductores)</span>
+                    <span class="exercise-type-tag type-core">Blindaje</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">20-25s/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Estático</span></div>
+                </div>
+                <div class="exercise-desc">Blindaje crucial de la sínfisis púbica y aductores contra el volumen de sprints y golpeos.</div>
+            </div>
+        </div>
+
+        <!-- DÍA 3 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-title">DÍA 3: Puesta a Punto y Potencia Lateral</div>
+                <div class="day-subtitle">Activación Nerviosa y Vector Lateral (PAP - Max 20 min)</div>
+            </div>
+
+            <div class="block-title">1. Explosividad Pura y Agilidad Lateral</div>
+            <div class="exercise-card plyo">
+                <div class="exercise-header">
+                    <span class="exercise-name">Cargadas de Potencia Colgado</span>
+                    <span class="exercise-type-tag type-pliometria">Explosivo</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">40-50 kg<br><small style="color:var(--accent-green)">RIR 4</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">2 min</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Explosivo</span></div>
+                </div>
+                <div class="exercise-desc">Extensión triple explosiva (tobillo/rodilla/cadera) para activación neuromuscular instantánea.</div>
+            </div>
+
+            <div class="exercise-card plyo">
+                <div class="exercise-header">
+                    <span class="exercise-name">Skater Jumps con Estabilización</span>
+                    <span class="exercise-type-tag type-pliometria">Explosivo Lat.</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">3</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">4/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">Corporal</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Reactivo</span></div>
+                </div>
+                <div class="exercise-desc">Saltos laterales cayendo en un pie. Clava la caída 1s antes de volver a saltar. Transfiere fuerza a estiradas y previene lesiones de rodilla.</div>
+            </div>
+
+            <div class="block-title">2. Empuje y Rotación</div>
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-name">Landmine Press Explosivo</span>
+                    <span class="exercise-type-tag type-fuerza">Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">5/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">15-20 kg<br><small style="color:var(--accent-green)">RIR 3</small></span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">90 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Máx. Vel.</span></div>
+                </div>
+                <div class="exercise-desc">Empuje diagonal muy veloz, transfiriendo fuerza desde el suelo.</div>
+            </div>
+
+            <div class="exercise-card warmup">
+                <div class="exercise-header">
+                    <span class="exercise-name">Cossack Squat con Mancuerna</span>
+                    <span class="exercise-type-tag type-activacion">Movilidad/Fuerza</span>
+                </div>
+                <div class="exercise-stats">
+                    <div class="stat-pill"><span class="stat-label">Series</span><span class="stat-value">2</span></div>
+                    <div class="stat-pill"><span class="stat-label">Reps</span><span class="stat-value">6/lado</span></div>
+                    <div class="stat-pill"><span class="stat-label">Carga</span><span class="stat-value">12-16 kg</span></div>
+                    <div class="stat-pill"><span class="stat-label">Descanso</span><span class="stat-value">60 s</span></div>
+                    <div class="stat-pill"><span class="stat-label">Tempo</span><span class="stat-value">Control</span></div>
+                </div>
+                <div class="exercise-desc">Fuerza en rangos de abducción profunda. Vital para el juego de pies del portero.</div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+
+
+        function switchBlock(blockId) {
+
+
+
+            document.querySelectorAll('.block-section').forEach(section => {
+
+
+
+                section.classList.remove('active');
+
+
+
+            });
+
+
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+
+
+
+                btn.classList.remove('active');
+
+
+
+            });
+
+
+
+            document.getElementById(blockId).classList.add('active');
+
+
+
+            event.currentTarget.classList.add('active');
+
+
+
+        }
+
+
+
+    </script>
+
+
+
+</body>
+
+
+
+</html>
+
+
+
