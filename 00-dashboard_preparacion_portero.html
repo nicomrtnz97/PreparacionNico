@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.2</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.3</span></h1>
 
 
 
@@ -84806,7 +84806,7 @@ window.onload = async function() {
     }
     
     async function fetchRemoteState() {
-        const url = `https://api.github.com/repos/${appState.githubSync.username}/${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json?t=${Date.now()}`;
+        const url = `https://api.github.com/repos/${appState.githubSync.username}/${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json?ref=main&t=${Date.now()}`;
         try {
             const response = await fetch(url, {
                 headers: getGitHubHeaders(),
@@ -84841,7 +84841,8 @@ window.onload = async function() {
         
         const body = {
             message: "Sincronización de marcas y peso de preparación física",
-            content: base64Content
+            content: base64Content,
+            branch: "main"
         };
         if (sha) {
             body.sha = sha;
