@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.4</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.5</span></h1>
 
 
 
@@ -84959,7 +84959,8 @@ window.onload = async function() {
     }
     
     async function testAndSaveSync() {
-        const token = document.getElementById('sync-input-token').value.trim();
+        let token = document.getElementById('sync-input-token').value.trim();
+            token = token.replace(/[^\x20-\x7E]/g, '');
         const username = document.getElementById('sync-input-username').value.trim();
         const repo = document.getElementById('sync-input-repo').value.trim();
         
