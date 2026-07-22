@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.0</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.1</span></h1>
 
 
 
@@ -84864,37 +84864,54 @@ window.onload = async function() {
         }
     }
     
-    async function syncWithGitHub(silent = false) {
-        if (isSyncing) return;
-        if (!appState.githubSync || !appState.githubSync.token) return;
-        
-        isSyncing = true;
-        updateSyncBadge('syncing', silent ? 'Sincronizando...' : 'Conectando...');
-        
-        try {
-            const remoteData = await fetchRemoteState();
-            let remoteSha = null;
-            if (remoteData) {
-                remoteSha = remoteData.sha;
-                mergeStates(remoteData.state);
-            }
+            async function syncWithGitHub(silent = false) {
+            if (isSyncing) return;
+            if (!appState.githubSync || !appState.githubSync.token) return;
             
-            const newSha = await pushStateToGitHub(remoteSha);
-            appState.githubSync.lastSync = new Date().toISOString();
-            saveState(true);
+            isSyncing = true;
+            updateSyncBadge('syncing', silent ? 'Sincronizando...' : 'Conectando...');
             
-            updateSyncBadge('synced', 'Sincronizado');
-        } catch (e) {
-            console.error("GitHub Sync error:", e);
-            updateSyncBadge('error', 'Error de Sinc.');
-            if (!silent) {
-                alert("Error al sincronizar con GitHub: " + e.message + "\n\n- Si ves '403 Forbidden', tu token no tiene permisos de ESCRITURA (activa 'repo' o 'Contents: Read & Write').\n- Si ves '401 Unauthorized', tu token es inválido o ha expirado.\n- Si ves '404 Not Found', el usuario o nombre del repositorio son incorrectos.");
+            try {
+                let remoteData = await fetchRemoteState();
+                let remoteSha = null;
+                if (remoteData) {
+                    remoteSha = remoteData.sha;
+                    mergeStates(remoteData.state);
+                }
+                
+                try {
+                    const newSha = await pushStateToGitHub(remoteSha);
+                    appState.githubSync.lastSync = new Date().toISOString();
+                    saveState(true); // Silent save local
+                    updateSyncBadge('synced', 'Sincronizado');
+                } catch (pushError) {
+                    // Auto-resolve 409 Conflict
+                    if (pushError.status === 409 || (pushError.message && pushError.message.includes('409'))) {
+                        console.log("Conflict (409) detected. Auto-retrying with latest SHA...");
+                        remoteData = await fetchRemoteState();
+                        if (remoteData) {
+                            remoteSha = remoteData.sha;
+                            mergeStates(remoteData.state);
+                            await pushStateToGitHub(remoteSha);
+                            appState.githubSync.lastSync = new Date().toISOString();
+                            saveState(true);
+                            updateSyncBadge('synced', 'Sincronizado');
+                            return;
+                        }
+                    }
+                    throw pushError;
+                }
+            } catch (e) {
+                console.error("GitHub Sync error:", e);
+                updateSyncBadge('error', 'Error de Sinc.');
+                if (!silent) {
+                    alert("Error al sincronizar con GitHub: " + e.message + "\n\n- Si ves '403 Forbidden', tu token no tiene permisos de ESCRITURA (activa 'repo' o 'Contents: Read & Write').\n- Si ves '401 Unauthorized', tu token es inválido o ha expirado.\n- Si ves '404 Not Found', el usuario o nombre del repositorio son incorrectos.");
+                }
+            } finally {
+                isSyncing = false;
+                updateUI();
             }
-        } finally {
-            isSyncing = false;
-            updateUI();
         }
-    }
     
     async function syncWithGitHubSilent() {
         await syncWithGitHub(true);
