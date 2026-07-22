@@ -23295,38 +23295,11 @@
 
 
             <div class="profile-badges">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <span class="badge highlight">Nico</span>
+            <span class="badge highlight">Nico</span>
+            <span class="badge" id="github-sync-badge" style="cursor:pointer; background-color: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.2); color: #cbd5e1; display: inline-flex; align-items: center; gap: 6px;" onclick="openSyncModal()">
+                <span id="sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #64748b; display: inline-block; transition: background-color 0.3s ease;"></span>
+                <span id="sync-text">GitHub no conectado</span>
+            </span>
 
 
 
@@ -60240,7 +60213,19 @@
 
 
 
-            appState.selectedWeekStart = getMondayOfCurrentWeek();
+            if (!appState.githubSync) {
+            appState.githubSync = { token: '', username: 'nicomrtnz97', repo: 'PreparacionNico', lastSync: '' };
+        }
+        saveState(true);
+        appState.selectedWeekStart = getMondayOfCurrentWeek();
+        // Initialize badge based on token availability
+        setTimeout(() => {
+            if (appState.githubSync && appState.githubSync.token) {
+                updateSyncBadge('synced', 'Sincronizado');
+            } else {
+                updateSyncBadge('offline', 'GitHub no conectado');
+            }
+        }, 100);
 
 
 
@@ -60315,294 +60300,24 @@
         }
 
         function saveState(skipUIUpdate = false) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            const toSave = {...appState};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            delete toSave.selectedWeekStart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            localStorage.setItem('goalkeeper_phys_prep_db', JSON.stringify(toSave));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if (!skipUIUpdate) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                updateUI();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            } else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                updateSyncStatusUI();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        const toSave = {...appState};
+        delete toSave.selectedWeekStart;
+        localStorage.setItem('goalkeeper_phys_prep_db', JSON.stringify(toSave));
+        if (!skipUIUpdate) {
+            updateUI();
+        } else {
+            updateSyncStatusUI();
         }
+        
+        // Auto sync to GitHub if configured and not currently syncing
+        if (appState.githubSync && appState.githubSync.token && !isSyncing) {
+            updateSyncBadge('pending', 'Pendiente de Sinc.');
+            if (window.syncTimeout) clearTimeout(window.syncTimeout);
+            window.syncTimeout = setTimeout(() => {
+                syncWithGitHubSilent();
+            }, 2000);
+        }
+    }
 
 
 
@@ -85029,198 +84744,24 @@ row.className = `cal-day-row active-${dayData.type}`;
         }
 
 window.onload = async function() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            loadState();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            await initFileAccess();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            const calendar = getOrCreateWeeklyCalendar(appState.selectedWeekStart);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if (!calendar.suggestedDays) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                runAutoScheduler();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        loadState();
+        await initFileAccess();
+        
+        // Silent sync from GitHub on page load if configured
+        if (appState.githubSync && appState.githubSync.token) {
+            try {
+                await syncWithGitHubSilent();
+            } catch(e) {
+                console.error("Initial GitHub sync failed:", e);
             }
+        }
+        
+        const calendar = getOrCreateWeeklyCalendar(appState.selectedWeekStart);
+        if (!calendar.suggestedDays) {
+            runAutoScheduler();
+        }
+        updateUI();
+    };
 
 
 
@@ -85252,39 +84793,243 @@ window.onload = async function() {
 
 
 
-            updateUI();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    // --- GITHUB CLOUD SYNCHRONIZATION ---
+    let isSyncing = false;
+    
+    function getGitHubHeaders() {
+        return {
+            'Authorization': `token ${appState.githubSync.token}`,
+            'Accept': 'application/vnd.github+json',
+            'Content-Type': 'application/json'
         };
+    }
+    
+    async function fetchRemoteState() {
+        const url = `https://api.github.com/repos/${appState.githubSync.username}/& #47;${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`.replace('& #47;', '');
+        try {
+            const response = await fetch(url, {
+                headers: getGitHubHeaders(),
+                cache: 'no-store'
+            });
+            if (response.status === 404) {
+                return null;
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            const decodedContent = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+            return {
+                sha: data.sha,
+                state: JSON.parse(decodedContent)
+            };
+        } catch (e) {
+            console.error("Error fetching remote state:", e);
+            throw e;
+        }
+    }
+    
+    async function pushStateToGitHub(sha = null) {
+        const url = `https://api.github.com/repos/${appState.githubSync.username}/& #47;${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`.replace('& #47;', '');
+        
+        const toSave = JSON.parse(JSON.stringify(appState));
+        delete toSave.selectedWeekStart;
+        
+        const contentStr = JSON.stringify(toSave, null, 2);
+        const base64Content = btoa(unescape(encodeURIComponent(contentStr)));
+        
+        const body = {
+            message: "Sincronización de marcas y peso de preparación física",
+            content: base64Content
+        };
+        if (sha) {
+            body.sha = sha;
+        }
+        
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: getGitHubHeaders(),
+                body: JSON.stringify(body)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const resData = await response.json();
+            return resData.content.sha;
+        } catch (e) {
+            console.error("Error pushing state to GitHub:", e);
+            throw e;
+        }
+    }
+    
+    async function syncWithGitHub(silent = false) {
+        if (isSyncing) return;
+        if (!appState.githubSync || !appState.githubSync.token) return;
+        
+        isSyncing = true;
+        updateSyncBadge('syncing', silent ? 'Sincronizando...' : 'Conectando...');
+        
+        try {
+            const remoteData = await fetchRemoteState();
+            let remoteSha = null;
+            if (remoteData) {
+                remoteSha = remoteData.sha;
+                mergeStates(remoteData.state);
+            }
+            
+            const newSha = await pushStateToGitHub(remoteSha);
+            appState.githubSync.lastSync = new Date().toISOString();
+            saveState(true);
+            
+            updateSyncBadge('synced', 'Sincronizado');
+        } catch (e) {
+            console.error("GitHub Sync error:", e);
+            updateSyncBadge('error', 'Error de Sinc.');
+            if (!silent) {
+                alert("Error al sincronizar con GitHub. Comprueba tu token (PAT) o repositorio.");
+            }
+        } finally {
+            isSyncing = false;
+            updateUI();
+        }
+    }
+    
+    async function syncWithGitHubSilent() {
+        await syncWithGitHub(true);
+    }
+    
+    function mergeStates(remote) {
+        if (!remote) return;
+        
+        function mergeObject(localObj, remoteObj) {
+            return Object.assign({}, remoteObj || {}, localObj || {});
+        }
+        
+        appState.weightLogs = mergeObject(appState.weightLogs, remote.weightLogs);
+        appState.gymLogs = mergeObject(appState.gymLogs, remote.gymLogs);
+        appState.wellnessLogs = mergeObject(appState.wellnessLogs, remote.wellnessLogs);
+        appState.weeklyCalendars = mergeObject(appState.weeklyCalendars, remote.weeklyCalendars);
+    }
+    
+    function openSyncModal() {
+        document.getElementById('sync-input-username').value = appState.githubSync.username || 'nicomrtnz97';
+        document.getElementById('sync-input-repo').value = appState.githubSync.repo || 'PreparacionNico';
+        document.getElementById('sync-input-token').value = appState.githubSync.token || '';
+        
+        const statusDiv = document.getElementById('sync-modal-status');
+        if (appState.githubSync.token) {
+            statusDiv.innerHTML = `Última sincronización: ${appState.githubSync.lastSync ? new Date(appState.githubSync.lastSync).toLocaleString() : 'Nunca'}`;
+            document.getElementById('btn-sync-disconnect').style.display = 'block';
+            document.getElementById('btn-sync-now').style.display = 'block';
+        } else {
+            statusDiv.innerHTML = 'Estado: No conectado';
+            document.getElementById('btn-sync-disconnect').style.display = 'none';
+            document.getElementById('btn-sync-now').style.display = 'none';
+        }
+        
+        document.getElementById('github-sync-modal').style.display = 'flex';
+    }
+    
+    function closeSyncModal() {
+        document.getElementById('github-sync-modal').style.display = 'none';
+    }
+    
+    async function testAndSaveSync() {
+        const token = document.getElementById('sync-input-token').value.trim();
+        const username = document.getElementById('sync-input-username').value.trim();
+        const repo = document.getElementById('sync-input-repo').value.trim();
+        
+        if (!token || !username || !repo) {
+            alert("Por favor, rellena todos los campos.");
+            return;
+        }
+        
+        const oldSync = { ...appState.githubSync };
+        appState.githubSync = { token, username, repo, lastSync: '' };
+        
+        const statusDiv = document.getElementById('sync-modal-status');
+        statusDiv.innerHTML = "Conectando y validando token...";
+        
+        try {
+            const testUrl = `https://api.github.com/repos/${username}/${repo}`;
+            const response = await fetch(testUrl, {
+                headers: getGitHubHeaders()
+            });
+            if (!response.ok) {
+                throw new Error(`Repositorio no encontrado o token inválido (HTTP ${response.status})`);
+            }
+            
+            statusDiv.innerHTML = "Conexión exitosa. Realizando primera sincronización...";
+            await syncWithGitHub(false);
+            closeSyncModal();
+        } catch (e) {
+            alert("Error al conectar: " + e.message);
+            appState.githubSync = oldSync;
+            openSyncModal();
+        }
+    }
+    
+    function disconnectSync() {
+        if (confirm("¿Desconectar la sincronización? Los datos locales se conservarán en este navegador.")) {
+            appState.githubSync = { token: '', username: 'nicomrtnz97', repo: 'PreparacionNico', lastSync: '' };
+            saveState(true);
+            updateSyncBadge('offline', 'GitHub no conectado');
+            closeSyncModal();
+        }
+    }
+    
+    async function triggerManualSync() {
+        const btn = document.getElementById('btn-sync-now');
+        btn.disabled = true;
+        btn.innerText = "Sincronizando...";
+        await syncWithGitHub(false);
+        btn.disabled = false;
+        btn.innerText = "Sincronizar Ahora 🔄";
+        openSyncModal();
+    }
+    
+    function updateSyncBadge(status, text) {
+        const badge = document.getElementById('github-sync-badge');
+        const dot = document.getElementById('sync-dot');
+        const txt = document.getElementById('sync-text');
+        if (!badge || !dot || !txt) return;
+        
+        txt.innerText = text;
+        
+        if (status === 'synced') {
+            dot.style.backgroundColor = '#10b981';
+            badge.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+            badge.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+            badge.style.color = '#a7f3d0';
+        } else if (status === 'syncing') {
+            dot.style.backgroundColor = '#3b82f6';
+            badge.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+            badge.style.borderColor = 'rgba(59, 130, 246, 0.2)';
+            badge.style.color = '#bfdbfe';
+        } else if (status === 'pending') {
+            dot.style.backgroundColor = '#f59e0b';
+            badge.style.backgroundColor = 'rgba(245, 158, 11, 0.1)';
+            badge.style.borderColor = 'rgba(245, 158, 11, 0.2)';
+            badge.style.color = '#fde68a';
+        } else if (status === 'error') {
+            dot.style.backgroundColor = '#ef4444';
+            badge.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+            badge.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+            badge.style.color = '#fca5a5';
+        } else {
+            dot.style.backgroundColor = '#64748b';
+            badge.style.backgroundColor = 'rgba(148, 163, 184, 0.1)';
+            badge.style.borderColor = 'rgba(148, 163, 184, 0.2)';
+            badge.style.color = '#cbd5e1';
+        }
+    }
+    
+    function updateSyncStatusUI() {
+        // Dummy placeholder to prevent reference error
+    }
+</script>
 
 
 
@@ -85316,38 +85061,38 @@ window.onload = async function() {
 
 
 
-    </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- MODAL DE CONFIGURACIÓN GITHUB SYNC -->
+<div id="github-sync-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: #1e293b; border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 90%; max-width: 400px; color: #fff;">
+        <h3 style="margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">🔄 Sincronización en la Nube</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 16px;">
+            Conecta tu panel con tu repositorio de GitHub para sincronizar tus marcas y peso entre tus dispositivos (PC y móvil) de forma automática.
+        </p>
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Usuario de GitHub:</label>
+            <input type="text" id="sync-input-username" style="width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; color: #fff; font-size: 0.85rem;" placeholder="nicomrtnz97">
+        </div>
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Nombre del Repositorio:</label>
+            <input type="text" id="sync-input-repo" style="width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; color: #fff; font-size: 0.85rem;" placeholder="PreparacionNico">
+        </div>
+        <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Personal Access Token (PAT):</label>
+            <input type="password" id="sync-input-token" style="width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; color: #fff; font-size: 0.85rem;" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <a href="https://github.com/settings/tokens/new?description=GoalkeeperPrepSync&scopes=repo" target="_blank" style="font-size: 0.7rem; color: var(--primary); display: inline-block; margin-top: 4px; text-decoration: underline;">Generar Token en GitHub (requiere permiso 'repo')</a>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 16px;" id="sync-modal-status"></div>
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+            <button class="btn btn-secondary" onclick="closeSyncModal()" style="font-size: 0.8rem; padding: 6px 12px;">Cancelar</button>
+            <button class="btn btn-primary" onclick="testAndSaveSync()" style="font-size: 0.8rem; padding: 6px 12px;">Guardar y Conectar</button>
+        </div>
+        <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn btn-danger" onclick="disconnectSync()" id="btn-sync-disconnect" style="font-size: 0.75rem; padding: 4px 8px; display: none;">Desconectar</button>
+            <button class="btn btn-success" onclick="triggerManualSync()" id="btn-sync-now" style="font-size: 0.75rem; padding: 4px 8px; display: none;">Sincronizar Ahora 🔄</button>
+        </div>
+    </div>
+</div>
 </body>
 
 
