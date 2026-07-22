@@ -84806,7 +84806,7 @@ window.onload = async function() {
     }
     
     async function fetchRemoteState() {
-        const url = `https://api.github.com/repos/${appState.githubSync.username}/& #47;${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`.replace('& #47;', '');
+        const url = `https://api.github.com/repos/${appState.githubSync.username}/${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`;
         try {
             const response = await fetch(url, {
                 headers: getGitHubHeaders(),
@@ -84831,7 +84831,7 @@ window.onload = async function() {
     }
     
     async function pushStateToGitHub(sha = null) {
-        const url = `https://api.github.com/repos/${appState.githubSync.username}/& #47;${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`.replace('& #47;', '');
+        const url = `https://api.github.com/repos/${appState.githubSync.username}/${appState.githubSync.repo}/contents/goalkeeper_phys_prep_db.json`;
         
         const toSave = JSON.parse(JSON.stringify(appState));
         delete toSave.selectedWeekStart;
