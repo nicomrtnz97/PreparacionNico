@@ -84799,7 +84799,7 @@ window.onload = async function() {
     
     function getGitHubHeaders() {
         return {
-            'Authorization': `token ${appState.githubSync.token}`,
+            'Authorization': `Bearer ${appState.githubSync.token}`,
             'Accept': 'application/vnd.github+json',
             'Content-Type': 'application/json'
         };
@@ -84888,7 +84888,7 @@ window.onload = async function() {
             console.error("GitHub Sync error:", e);
             updateSyncBadge('error', 'Error de Sinc.');
             if (!silent) {
-                alert("Error al sincronizar con GitHub. Comprueba tu token (PAT) o repositorio.");
+                alert("Error al sincronizar con GitHub: " + e.message + "\n\n- Si ves '403 Forbidden', tu token no tiene permisos de ESCRITURA (activa 'repo' o 'Contents: Read & Write').\n- Si ves '401 Unauthorized', tu token es inválido o ha expirado.\n- Si ves '404 Not Found', el usuario o nombre del repositorio son incorrectos.");
             }
         } finally {
             isSyncing = false;
