@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.3</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.2.4</span></h1>
 
 
 
@@ -84816,7 +84816,11 @@ window.onload = async function() {
                 return null;
             }
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorJson = await response.json().catch(() => ({}));
+                    const errorMsg = errorJson.message || 'No details';
+                    const err = new Error(`HTTP error! status: ${response.status} (${errorMsg})`);
+                    err.status = response.status;
+                    throw err;
             }
             const data = await response.json();
             const decodedContent = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
