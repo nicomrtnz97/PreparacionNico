@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.3.1</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.4.0</span></h1>
 
 
 
@@ -33367,7 +33367,10 @@
 
 
 
-                    <button class="btn" style="background-color: var(--accent-red); box-shadow: none;" onclick="resetDatabase()">⚠️ Restablecer Valores de Fábrica</button>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn" style="background-color: var(--primary); flex: 1; min-width: 160px;" onclick="changeAccessPassword()">🔑 Cambiar Contraseña de Acceso</button>
+                    <button class="btn" style="background-color: var(--accent-red); flex: 1; min-width: 160px; box-shadow: none;" onclick="resetDatabase()">⚠️ Restablecer Valores de Fábrica</button>
+                </div>
 
 
 
@@ -83727,8 +83730,24 @@ row.className = `cal-day-row active-${dayData.type}`;
             document.getElementById('wellness-content').style.display = panelOpen ? 'flex' : 'none';
         }
 
-window.onload = async function() {
+let onloadCompleted = false;
+    
+    window.onload = async function() {
         loadState();
+        
+        // Initial check for password lock
+        const locked = await checkLockState();
+        if (locked) {
+            return; // Stop onload execution until unlocked!
+        }
+        
+        await proceedWithOnload();
+    }
+    
+    async function proceedWithOnload() {
+        if (onloadCompleted) return;
+        onloadCompleted = true;
+        
         await initFileAccess();
         
         // Silent sync from GitHub on page load if configured
@@ -83744,6 +83763,8 @@ window.onload = async function() {
         if (!calendar.suggestedDays) {
             runAutoScheduler();
         }
+        
+        document.querySelector('.container').style.display = 'block';
         updateUI();
     };
 
@@ -84064,6 +84085,137 @@ window.onload = async function() {
     function updateSyncStatusUI() {
         // Dummy placeholder to prevent reference error
     }
+
+    // --- PASSWORD PROTECTION ---
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    
+    function toggleRememberMe() {
+        const cb = document.getElementById('lock-remember-checkbox');
+        if (cb) cb.checked = !cb.checked;
+    }
+    
+    async function checkLockState() {
+        const lockScreen = document.getElementById('dashboard-lock-screen');
+        const container = document.querySelector('.container');
+        
+        if (!lockScreen || !container) return false;
+        
+        // Hide container by default until checked
+        container.style.display = 'none';
+        
+        if (!appState.passwordHash) {
+            // First visit: Setup password
+            lockScreen.style.display = 'flex';
+            document.getElementById('lock-title').innerText = "Crea tu Contraseña";
+            document.getElementById('lock-subtitle').innerText = "Crea una contraseña de acceso para proteger tu panel en todos tus dispositivos.";
+            document.getElementById('lock-setup-form').style.display = 'block';
+            document.getElementById('lock-login-form').style.display = 'none';
+            return true; // Locked (setup needed)
+        }
+        
+        const isUnlocked = sessionStorage.getItem('isDashboardUnlocked') === 'true' || 
+                           localStorage.getItem('rememberDeviceUnlock') === 'true';
+                           
+        if (isUnlocked) {
+            lockScreen.style.display = 'none';
+            container.style.display = 'block';
+            return false; // Unlocked
+        } else {
+            // Show login form
+            lockScreen.style.display = 'flex';
+            document.getElementById('lock-title').innerText = "Panel Protegido";
+            document.getElementById('lock-subtitle').innerText = "Introduce tu contraseña para acceder a la preparación física.";
+            document.getElementById('lock-setup-form').style.display = 'none';
+            document.getElementById('lock-login-form').style.display = 'block';
+            
+            // Focus input
+            setTimeout(() => {
+                const inp = document.getElementById('lock-password-input');
+                if (inp) inp.focus();
+            }, 100);
+            return true; // Locked
+        }
+    }
+    
+    async function setupNewPassword() {
+        const p1 = document.getElementById('lock-new-password').value;
+        const p2 = document.getElementById('lock-confirm-password').value;
+        
+        if (!p1) {
+            showLockError("Por favor, introduce una contraseña.");
+            return;
+        }
+        if (p1 !== p2) {
+            showLockError("Las contraseñas no coinciden.");
+            return;
+        }
+        
+        try {
+            const hash = await hashPassword(p1);
+            appState.passwordHash = hash;
+            sessionStorage.setItem('isDashboardUnlocked', 'true');
+            
+            // Save state immediately (this will also push to GitHub!)
+            saveState();
+            
+            document.getElementById('dashboard-lock-screen').style.display = 'none';
+            await proceedWithOnload();
+        } catch (e) {
+            showLockError("Error al configurar la contraseña: " + e.message);
+        }
+    }
+    
+    async function unlockDashboard() {
+        const p = document.getElementById('lock-password-input').value;
+        if (!p) {
+            showLockError("Por favor, introduce tu contraseña.");
+            return;
+        }
+        
+        try {
+            const hash = await hashPassword(p);
+            if (hash === appState.passwordHash) {
+                sessionStorage.setItem('isDashboardUnlocked', 'true');
+                if (document.getElementById('lock-remember-checkbox').checked) {
+                    localStorage.setItem('rememberDeviceUnlock', 'true');
+                }
+                document.getElementById('dashboard-lock-screen').style.display = 'none';
+                await proceedWithOnload();
+            } else {
+                showLockError("Contraseña incorrecta.");
+                const inp = document.getElementById('lock-password-input');
+                if (inp) {
+                    inp.value = '';
+                    inp.focus();
+                }
+            }
+        } catch (e) {
+            showLockError("Error al descifrar: " + e.message);
+        }
+    }
+    
+    function showLockError(text) {
+        const div = document.getElementById('lock-error-msg');
+        if (div) {
+            div.innerText = text;
+            div.style.display = 'block';
+        }
+    }
+    
+    function changeAccessPassword() {
+        if (confirm("¿Deseas cambiar tu contraseña de acceso actual?")) {
+            appState.passwordHash = '';
+            localStorage.removeItem('rememberDeviceUnlock');
+            sessionStorage.removeItem('isDashboardUnlocked');
+            saveState();
+            window.location.reload();
+        }
+    }
 </script>
 
 
@@ -84126,6 +84278,40 @@ window.onload = async function() {
             <button class="btn btn-danger" onclick="disconnectSync()" id="btn-sync-disconnect" style="font-size: 0.75rem; padding: 4px 8px; display: none;">Desconectar</button>
             <button class="btn btn-success" onclick="triggerManualSync()" id="btn-sync-now" style="font-size: 0.75rem; padding: 4px 8px; display: none;">Sincronizar Ahora 🔄</button>
         </div>
+    </div>
+</div>
+
+<!-- PANTALLA DE BLOQUEO DE CONTRASEÑA -->
+<div id="dashboard-lock-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #080a11; z-index: 9999; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif;">
+    <div style="background: rgba(17, 21, 36, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 40px 32px; width: 90%; max-width: 400px; text-align: center; backdrop-filter: blur(16px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); color: #fff;">
+        <div style="width: 64px; height: 64px; background: rgba(59, 130, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </div>
+        <h2 id="lock-title" style="margin-top: 0; margin-bottom: 8px; font-size: 1.4rem; font-weight: 700; color: #fff;">Panel Protegido</h2>
+        <p id="lock-subtitle" style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin-bottom: 28px;">Introduce tu contraseña para acceder a la preparación física.</p>
+        
+        <div id="lock-login-form" style="display: none;">
+            <div style="margin-bottom: 16px; text-align: left;">
+                <input type="password" id="lock-password-input" placeholder="Introduce la contraseña" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.2s;" onkeydown="if(event.key==='Enter') unlockDashboard()">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; text-align: left; cursor: pointer;" onclick="toggleRememberMe()">
+                <input type="checkbox" id="lock-remember-checkbox" style="width: 16px; height: 16px; accent-color: #3b82f6; cursor: pointer;">
+                <label style="font-size: 0.8rem; color: #94a3b8; user-select: none; cursor: pointer;">Recordarme en este dispositivo</label>
+            </div>
+            <button class="btn btn-primary" onclick="unlockDashboard()" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #3b82f6 0%, #6d28d9 100%); border: none; cursor: pointer; color: #fff;">Desbloquear</button>
+        </div>
+        
+        <div id="lock-setup-form" style="display: none;">
+            <div style="margin-bottom: 16px; text-align: left;">
+                <input type="password" id="lock-new-password" placeholder="Nueva contraseña" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 0.95rem; outline: none; margin-bottom: 12px;">
+                <input type="password" id="lock-confirm-password" placeholder="Confirmar contraseña" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 0.95rem; outline: none;" onkeydown="if(event.key==='Enter') setupNewPassword()">
+            </div>
+            <button class="btn btn-primary" onclick="setupNewPassword()" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; cursor: pointer; color: #fff;">Crear Contraseña y Acceder</button>
+        </div>
+        <div id="lock-error-msg" style="color: #ef4444; font-size: 0.8rem; margin-top: 16px; font-weight: 600; display: none;"></div>
     </div>
 </div>
 </body>
