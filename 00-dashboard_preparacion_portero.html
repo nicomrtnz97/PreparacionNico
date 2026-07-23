@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.3.0</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.3.1</span></h1>
 
 
 
@@ -56937,6 +56937,14 @@
 
 
                     appState = JSON.parse(stored);
+                    
+                    // Reparación automática de bases de datos corruptas
+                    if (appState.weightLogs && !Array.isArray(appState.weightLogs)) {
+                        appState.weightLogs = Object.values(appState.weightLogs);
+                    }
+                    if (appState.testLogs && !Array.isArray(appState.testLogs)) {
+                        appState.testLogs = Object.values(appState.testLogs);
+                    }
 
 
 
@@ -83908,11 +83916,32 @@ window.onload = async function() {
     function mergeStates(remote) {
         if (!remote) return;
         
+        // Reparación de objetos remotos o locales corruptos
+        if (remote.weightLogs && !Array.isArray(remote.weightLogs)) remote.weightLogs = Object.values(remote.weightLogs);
+        if (remote.testLogs && !Array.isArray(remote.testLogs)) remote.testLogs = Object.values(remote.testLogs);
+        if (appState.weightLogs && !Array.isArray(appState.weightLogs)) appState.weightLogs = Object.values(appState.weightLogs);
+        if (appState.testLogs && !Array.isArray(appState.testLogs)) appState.testLogs = Object.values(appState.testLogs);
+        
         function mergeObject(localObj, remoteObj) {
             return Object.assign({}, remoteObj || {}, localObj || {});
         }
         
-        appState.weightLogs = mergeObject(appState.weightLogs, remote.weightLogs);
+        function mergeArrayByDate(localArr, remoteArr) {
+            const combined = [...(localArr || []), ...(remoteArr || [])];
+            const seen = new Set();
+            const unique = [];
+            for (const item of combined) {
+                if (item && item.date && !seen.has(item.date)) {
+                    seen.add(item.date);
+                    unique.push(item);
+                }
+            }
+            unique.sort((a, b) => new Date(a.date) - new Date(b.date));
+            return unique;
+        }
+        
+        appState.weightLogs = mergeArrayByDate(appState.weightLogs, remote.weightLogs);
+        appState.testLogs = mergeArrayByDate(appState.testLogs, remote.testLogs);
         appState.gymLogs = mergeObject(appState.gymLogs, remote.gymLogs);
         appState.wellnessLogs = mergeObject(appState.wellnessLogs, remote.wellnessLogs);
         appState.weeklyCalendars = mergeObject(appState.weeklyCalendars, remote.weeklyCalendars);
