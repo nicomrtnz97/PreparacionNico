@@ -3311,16 +3311,16 @@
   "wellnessLogs": {
     "2026-07-24": {
       "fatigue": 4,
-      "pain": 5,
+      "pain": 2,
       "sleep": 1,
-      "score": 10,
-      "percentage": 77
+      "score": 7,
+      "percentage": 50
     }
   },
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-23T14:53:22.788Z"
+    "lastSync": "2026-07-23T14:53:29.395Z"
   },
   "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
