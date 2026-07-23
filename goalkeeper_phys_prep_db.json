@@ -3310,17 +3310,17 @@
   "currentWeight": 85.7,
   "wellnessLogs": {
     "2026-07-24": {
-      "fatigue": 5,
+      "fatigue": 4,
       "pain": 5,
-      "sleep": 5,
-      "score": 15,
-      "percentage": 100
+      "sleep": 1,
+      "score": 10,
+      "percentage": 77
     }
   },
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-23T14:49:05.375Z"
+    "lastSync": "2026-07-23T14:53:22.788Z"
   },
   "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
