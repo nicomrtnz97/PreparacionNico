@@ -327,7 +327,13 @@
           "desc": "Descanso Total",
           "notes": "Recuperar y recargar"
         }
-      }
+      },
+      "allowWeekend": false,
+      "suggestedDays": [
+        0,
+        2,
+        4
+      ]
     },
     "2026-07-20": {
       "padel": "1",
