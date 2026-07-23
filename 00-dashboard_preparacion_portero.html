@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.4.0</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.0</span></h1>
 
 
 
@@ -23295,170 +23295,15 @@
 
 
             <div class="profile-badges">
-            <span class="badge highlight">Nico</span>
-            <span class="badge" id="github-sync-badge" style="cursor:pointer; background-color: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.2); color: #cbd5e1; display: inline-flex; align-items: center; gap: 6px;" onclick="openSyncModal()">
-                <span id="sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #64748b; display: inline-block; transition: background-color 0.3s ease;"></span>
-                <span id="sync-text">GitHub no conectado</span>
-            </span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <span class="badge">29 años</span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <span class="badge">1.85 m</span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <span class="badge highlight" id="profile-badge-name">Atleta</span>
+                <span class="badge" id="github-sync-badge" style="cursor:pointer; background-color: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.2); color: #cbd5e1; display: inline-flex; align-items: center; gap: 6px;" onclick="openSyncModal()">
+                    <span id="sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #64748b; display: inline-block; transition: background-color 0.3s ease;"></span>
+                    <span id="sync-text">GitHub no conectado</span>
+                </span>
+                <span class="badge" id="profile-badge-age">Edad</span>
+                <span class="badge" id="profile-badge-height">Altura</span>
                 <span class="badge" id="banner-weight">85.0 kg</span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <span class="badge highlight">Meta: 80.0 kg</span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <span class="badge highlight" id="profile-badge-target">Meta</span>
             </div>
 
 
@@ -33111,7 +32956,34 @@
 
 
 
-                <div style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 5px;">
+                
+                <!-- EDITAR PERFIL DE ATLETA -->
+                <div style="background-color: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                    <h3 class="card-title" style="font-size:0.95rem; color:#fff; margin-bottom:12px;">👤 Editar Perfil de Atleta</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Nombre:</label>
+                            <input type="text" id="profile-input-name" style="width:100%; background:#0f172a; border:1px solid var(--border); padding:8px; border-radius:8px; color:#fff; font-size:0.85rem;">
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Edad / Datos (ej. 29 años):</label>
+                            <input type="text" id="profile-input-age" style="width:100%; background:#0f172a; border:1px solid var(--border); padding:8px; border-radius:8px; color:#fff; font-size:0.85rem;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Altura (ej. 1.85 m):</label>
+                            <input type="text" id="profile-input-height" style="width:100%; background:#0f172a; border:1px solid var(--border); padding:8px; border-radius:8px; color:#fff; font-size:0.85rem;">
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Meta de Peso (ej. Meta: 80.0 kg):</label>
+                            <input type="text" id="profile-input-target" style="width:100%; background:#0f172a; border:1px solid var(--border); padding:8px; border-radius:8px; color:#fff; font-size:0.85rem;">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveProfileDetails()" style="font-size:0.85rem; padding:8px 16px; cursor: pointer; color: #fff; border: none; border-radius: 8px;">Guardar Perfil</button>
+                </div>
+
+<div style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 5px;">
 
 
 
@@ -33562,7 +33434,7 @@
 
 
 
-            <span>Diseño Premium Desarrollado para Nico (Fútbol 11 & Gimnasio)</span>
+            <span>Diseño Premium Desarrollado para <span id="profile-footer-name">Atleta</span> (Fútbol 11 & Gimnasio)</span>
 
 
 
@@ -57043,6 +56915,15 @@
 
 
 
+                    if (!appState.profile) {
+                        appState.profile = {
+                            name: "Nico",
+                            age: "29 años",
+                            height: "1.85 m",
+                            target: "Meta: 80.0 kg"
+                        };
+                    }
+                    
                     if (!appState.weightLogs) {
 
 
@@ -83107,6 +82988,32 @@ row.className = `cal-day-row active-${dayData.type}`;
 
 
         function updateUI() {
+            // Update profile badges
+            if (appState.profile) {
+                const badgeName = document.getElementById('profile-badge-name');
+                const badgeAge = document.getElementById('profile-badge-age');
+                const badgeHeight = document.getElementById('profile-badge-height');
+                const badgeTarget = document.getElementById('profile-badge-target');
+                const footerName = document.getElementById('profile-footer-name');
+                
+                if (badgeName) badgeName.innerText = appState.profile.name || "Atleta";
+                if (badgeAge) badgeAge.innerText = appState.profile.age || "";
+                if (badgeHeight) badgeHeight.innerText = appState.profile.height || "";
+                if (badgeTarget) badgeTarget.innerText = appState.profile.target || "";
+                if (footerName) footerName.innerText = appState.profile.name || "Atleta";
+                
+                // Populate inputs in settings if empty
+                const inName = document.getElementById('profile-input-name');
+                const inAge = document.getElementById('profile-input-age');
+                const inHeight = document.getElementById('profile-input-height');
+                const inTarget = document.getElementById('profile-input-target');
+                
+                if (inName && !inName.value) inName.value = appState.profile.name || "";
+                if (inAge && !inAge.value) inAge.value = appState.profile.age || "";
+                if (inHeight && !inHeight.value) inHeight.value = appState.profile.height || "";
+                if (inTarget && !inTarget.value) inTarget.value = appState.profile.target || "";
+            }
+
 
 
 
@@ -83829,9 +83736,33 @@ let onloadCompleted = false;
             }
             const data = await response.json();
             const decodedContent = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+            let state = JSON.parse(decodedContent);
+            
+            // Decrypt remote state if encrypted
+            if (state && state.encrypted) {
+                let password = getActivePassword();
+                if (!password) {
+                    password = prompt("Esta base de datos en la nube está protegida y cifrada. Por favor, introduce tu contraseña de acceso para descifrarla:");
+                    if (!password) {
+                        throw new Error("Se requiere la contraseña para descifrar la base de datos.");
+                    }
+                }
+                try {
+                    const decryptedStr = await decryptPayload(state, password);
+                    state = JSON.parse(decryptedStr);
+                    
+                    // Decryption succeeded, cache password locally
+                    window.activePassword = password;
+                    sessionStorage.setItem('cachedSessionKey', password);
+                    localStorage.setItem('cachedUnlockKey', password);
+                } catch (decErr) {
+                    throw new Error("Contraseña incorrecta. No se pudo descifrar la base de datos.");
+                }
+            }
+            
             return {
                 sha: data.sha,
-                state: JSON.parse(decodedContent)
+                state: state
             };
         } catch (e) {
             console.error("Error fetching remote state:", e);
@@ -83848,7 +83779,19 @@ let onloadCompleted = false;
             delete toSave.githubSync.token;
         }
         
-        const contentStr = JSON.stringify(toSave, null, 2);
+        let contentStr = JSON.stringify(toSave, null, 2);
+        
+        // Encrypt data if password is set
+        const password = getActivePassword();
+        if (password && appState.passwordHash) {
+            try {
+                const encryptedPayload = await encryptPayload(contentStr, password);
+                contentStr = JSON.stringify(encryptedPayload, null, 2);
+            } catch (encErr) {
+                console.error("Encryption failed, pushing unencrypted state as fallback:", encErr);
+            }
+        }
+        
         const base64Content = btoa(unescape(encodeURIComponent(contentStr)));
         
         const body = {
@@ -84030,6 +83973,9 @@ let onloadCompleted = false;
     function disconnectSync() {
         if (confirm("¿Desconectar la sincronización? Los datos locales se conservarán en este navegador.")) {
             appState.githubSync = { token: '', username: 'nicomrtnz97', repo: 'PreparacionNico', lastSync: '' };
+            localStorage.removeItem('cachedUnlockKey');
+            sessionStorage.removeItem('cachedSessionKey');
+            window.activePassword = '';
             saveState(true);
             updateSyncBadge('offline', 'GitHub no conectado');
             closeSyncModal();
@@ -84099,46 +84045,107 @@ let onloadCompleted = false;
         if (cb) cb.checked = !cb.checked;
     }
     
+    window.activePassword = '';
+
+    // --- BASE64 & CRYPTO ENCRYPTION HELPERS ---
+    function bufferToBase64(buf) {
+        const bin = String.fromCharCode.apply(null, new Uint8Array(buf));
+        return btoa(bin);
+    }
+    
+    function base64ToBuffer(b64) {
+        const bin = atob(b64);
+        const buf = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+            buf[i] = bin.charCodeAt(i);
+        }
+        return buf.buffer;
+    }
+    
+    async function deriveKeyFromPassword(password) {
+        const encoder = new TextEncoder();
+        const hash = await crypto.subtle.digest('SHA-256', encoder.encode(password));
+        return crypto.subtle.importKey(
+            'raw',
+            hash,
+            { name: 'AES-GCM' },
+            false,
+            ['encrypt', 'decrypt']
+        );
+    }
+    
+    async function encryptPayload(plaintext, password) {
+        const encoder = new TextEncoder();
+        const key = await deriveKeyFromPassword(password);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const ciphertext = await crypto.subtle.encrypt(
+            { name: 'AES-GCM', iv: iv },
+            key,
+            encoder.encode(plaintext)
+        );
+        return {
+            encrypted: true,
+            iv: bufferToBase64(iv),
+            data: bufferToBase64(ciphertext)
+        };
+    }
+    
+    async function decryptPayload(payload, password) {
+        const decoder = new TextDecoder();
+        const key = await deriveKeyFromPassword(password);
+        const iv = base64ToBuffer(payload.iv);
+        const ciphertext = base64ToBuffer(payload.data);
+        const decrypted = await crypto.subtle.decrypt(
+            { name: 'AES-GCM', iv: iv },
+            key,
+            ciphertext
+        );
+        return decoder.decode(decrypted);
+    }
+
+    function getActivePassword() {
+        return window.activePassword || 
+               sessionStorage.getItem('cachedSessionKey') || 
+               localStorage.getItem('cachedUnlockKey') || 
+               '';
+    }
+
     async function checkLockState() {
         const lockScreen = document.getElementById('dashboard-lock-screen');
         const container = document.querySelector('.container');
         
         if (!lockScreen || !container) return false;
         
-        // Hide container by default until checked
         container.style.display = 'none';
         
         if (!appState.passwordHash) {
-            // First visit: Setup password
             lockScreen.style.display = 'flex';
             document.getElementById('lock-title').innerText = "Crea tu Contraseña";
             document.getElementById('lock-subtitle').innerText = "Crea una contraseña de acceso para proteger tu panel en todos tus dispositivos.";
             document.getElementById('lock-setup-form').style.display = 'block';
             document.getElementById('lock-login-form').style.display = 'none';
-            return true; // Locked (setup needed)
+            return true;
         }
         
-        const isUnlocked = sessionStorage.getItem('isDashboardUnlocked') === 'true' || 
-                           localStorage.getItem('rememberDeviceUnlock') === 'true';
-                           
-        if (isUnlocked) {
+        const cachedKey = sessionStorage.getItem('cachedSessionKey') || localStorage.getItem('cachedUnlockKey');
+        
+        if (cachedKey) {
+            window.activePassword = cachedKey;
             lockScreen.style.display = 'none';
             container.style.display = 'block';
-            return false; // Unlocked
+            return false;
         } else {
-            // Show login form
             lockScreen.style.display = 'flex';
             document.getElementById('lock-title').innerText = "Panel Protegido";
             document.getElementById('lock-subtitle').innerText = "Introduce tu contraseña para acceder a la preparación física.";
             document.getElementById('lock-setup-form').style.display = 'none';
             document.getElementById('lock-login-form').style.display = 'block';
             
-            // Focus input
             setTimeout(() => {
                 const inp = document.getElementById('lock-password-input');
                 if (inp) inp.focus();
             }, 100);
-            return true; // Locked
+            return true;
         }
     }
     
@@ -84158,9 +84165,11 @@ let onloadCompleted = false;
         try {
             const hash = await hashPassword(p1);
             appState.passwordHash = hash;
-            sessionStorage.setItem('isDashboardUnlocked', 'true');
             
-            // Save state immediately (this will also push to GitHub!)
+            window.activePassword = p1;
+            sessionStorage.setItem('cachedSessionKey', p1);
+            localStorage.setItem('cachedUnlockKey', p1);
+            
             saveState();
             
             document.getElementById('dashboard-lock-screen').style.display = 'none';
@@ -84180,9 +84189,12 @@ let onloadCompleted = false;
         try {
             const hash = await hashPassword(p);
             if (hash === appState.passwordHash) {
-                sessionStorage.setItem('isDashboardUnlocked', 'true');
+                window.activePassword = p;
+                sessionStorage.setItem('cachedSessionKey', p);
                 if (document.getElementById('lock-remember-checkbox').checked) {
-                    localStorage.setItem('rememberDeviceUnlock', 'true');
+                    localStorage.setItem('cachedUnlockKey', p);
+                } else {
+                    localStorage.removeItem('cachedUnlockKey');
                 }
                 document.getElementById('dashboard-lock-screen').style.display = 'none';
                 await proceedWithOnload();
@@ -84210,11 +84222,35 @@ let onloadCompleted = false;
     function changeAccessPassword() {
         if (confirm("¿Deseas cambiar tu contraseña de acceso actual?")) {
             appState.passwordHash = '';
-            localStorage.removeItem('rememberDeviceUnlock');
-            sessionStorage.removeItem('isDashboardUnlocked');
+            localStorage.removeItem('cachedUnlockKey');
+            sessionStorage.removeItem('cachedSessionKey');
+            window.activePassword = '';
             saveState();
             window.location.reload();
         }
+    }
+
+    // --- PROFILE MANAGEMENT ---
+    function saveProfileDetails() {
+        const name = document.getElementById('profile-input-name').value.trim();
+        const age = document.getElementById('profile-input-age').value.trim();
+        const height = document.getElementById('profile-input-height').value.trim();
+        const target = document.getElementById('profile-input-target').value.trim();
+        
+        if (!name || !age || !height || !target) {
+            alert("Por favor, rellena todos los campos del perfil.");
+            return;
+        }
+        
+        if (!appState.profile) appState.profile = {};
+        appState.profile.name = name;
+        appState.profile.age = age;
+        appState.profile.height = height;
+        appState.profile.target = target;
+        
+        saveState();
+        updateUI();
+        alert("¡Perfil guardado correctamente y programado para sincronizarse!");
     }
 </script>
 
