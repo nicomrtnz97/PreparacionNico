@@ -327,13 +327,7 @@
           "desc": "Descanso Total",
           "notes": "Recuperar y recargar"
         }
-      },
-      "allowWeekend": false,
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
+      }
     },
     "2026-07-20": {
       "padel": "1",
@@ -3312,13 +3306,21 @@
     }
   ],
   "activeBlock": "fase0_blockA",
-  "activeRoutineDay": 1,
+  "activeRoutineDay": 3,
   "currentWeight": 85.7,
-  "wellnessLogs": {},
+  "wellnessLogs": {
+    "2026-07-24": {
+      "fatigue": 5,
+      "pain": 5,
+      "sleep": 5,
+      "score": 15,
+      "percentage": 100
+    }
+  },
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-23T14:46:48.165Z"
+    "lastSync": "2026-07-23T14:49:05.375Z"
   },
   "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
