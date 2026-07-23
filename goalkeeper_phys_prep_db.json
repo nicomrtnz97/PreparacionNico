@@ -3098,6 +3098,23 @@
           "weight": 0,
           "rir": ""
         }
+      ],
+      "b_d1_a1": [
+        {
+          "completed": true,
+          "weight": 40,
+          "rir": ""
+        },
+        {
+          "completed": true,
+          "weight": 40,
+          "rir": ""
+        },
+        {
+          "completed": true,
+          "weight": 40,
+          "rir": ""
+        }
       ]
     },
     "2026-07-22": {
@@ -3278,7 +3295,7 @@
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-23T14:48:38.415Z"
+    "lastSync": "2026-07-23T14:48:40.379Z"
   },
   "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
