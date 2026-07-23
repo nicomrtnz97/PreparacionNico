@@ -22,7 +22,7 @@
         },
         "Jueves": {
           "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
+          "desc": "Fútbol 11 (Partido)",
           "notes": "Sprints y saltos"
         },
         "Viernes": {
@@ -45,7 +45,6 @@
     "2026-06-08": {
       "padel": "1",
       "f7": "3",
-      "allowWeekend": false,
       "days": {
         "Lunes": {
           "type": "gym",
@@ -64,7 +63,7 @@
         },
         "Jueves": {
           "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
+          "desc": "Fútbol 11 (Partido)",
           "notes": "Sprints y saltos"
         },
         "Viernes": {
@@ -82,17 +81,11 @@
           "desc": "Descanso Total",
           "notes": "Recuperar y recargar"
         }
-      },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
+      }
     },
     "2026-06-15": {
       "padel": "1",
       "f7": "3",
-      "allowWeekend": false,
       "days": {
         "Lunes": {
           "type": "gym",
@@ -111,7 +104,7 @@
         },
         "Jueves": {
           "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
+          "desc": "Fútbol 11 (Partido)",
           "notes": "Sprints y saltos"
         },
         "Viernes": {
@@ -129,17 +122,11 @@
           "desc": "Descanso Total",
           "notes": "Recuperar y recargar"
         }
-      },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
+      }
     },
     "2026-06-01": {
       "padel": "1",
       "f7": "3",
-      "allowWeekend": false,
       "days": {
         "Lunes": {
           "type": "gym",
@@ -158,7 +145,212 @@
         },
         "Jueves": {
           "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
+          "desc": "Fútbol 11 (Partido)",
+          "notes": "Sprints y saltos"
+        },
+        "Viernes": {
+          "type": "gym",
+          "desc": "Día 3: Potencia / Empuje",
+          "notes": "Landmine y pliometría"
+        },
+        "Sábado": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        },
+        "Domingo": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        }
+      }
+    },
+    "2026-06-22": {
+      "padel": "1",
+      "f7": "3",
+      "days": {
+        "Lunes": {
+          "type": "gym",
+          "desc": "Día 1: Fuerza Pierna",
+          "notes": "Foco cuádriceps / isometría"
+        },
+        "Martes": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Miércoles": {
+          "type": "gym",
+          "desc": "Día 2: Fuerza Superior",
+          "notes": "Espalda y tracciones"
+        },
+        "Jueves": {
+          "type": "f7",
+          "desc": "Fútbol 11 (Partido)",
+          "notes": "Sprints y saltos"
+        },
+        "Viernes": {
+          "type": "gym",
+          "desc": "Día 3: Potencia / Empuje",
+          "notes": "Landmine y pliometría"
+        },
+        "Sábado": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        },
+        "Domingo": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        }
+      }
+    },
+    "2026-06-29": {
+      "padel": "2",
+      "f7": "0",
+      "days": {
+        "Lunes": {
+          "type": "gym",
+          "desc": "Día 1: Fuerza Pierna",
+          "notes": "Descarga activa - Volumen al 50%"
+        },
+        "Martes": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Miércoles": {
+          "type": "gym",
+          "desc": "Día 2: Fuerza Superior",
+          "notes": "Descarga activa - Volumen al 50%"
+        },
+        "Jueves": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Viernes": {
+          "type": "gym",
+          "desc": "Día 3: Potencia / Empuje",
+          "notes": "Descarga activa - Sin saltos ni sprints"
+        },
+        "Sábado": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Descanso"
+        },
+        "Domingo": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperación"
+        }
+      }
+    },
+    "2026-07-06": {
+      "padel": "1",
+      "f7": "3",
+      "days": {
+        "Lunes": {
+          "type": "gym",
+          "desc": "Día 1: Fuerza Pierna",
+          "notes": "Foco cuádriceps / isometría"
+        },
+        "Martes": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Miércoles": {
+          "type": "gym",
+          "desc": "Día 2: Fuerza Superior",
+          "notes": "Espalda y tracciones"
+        },
+        "Jueves": {
+          "type": "f7",
+          "desc": "Fútbol 11 (Partido)",
+          "notes": "Sprints y saltos"
+        },
+        "Viernes": {
+          "type": "gym",
+          "desc": "Día 3: Potencia / Empuje",
+          "notes": "Landmine y pliometría"
+        },
+        "Sábado": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        },
+        "Domingo": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        }
+      }
+    },
+    "2026-07-13": {
+      "padel": "1",
+      "f7": "3",
+      "days": {
+        "Lunes": {
+          "type": "gym",
+          "desc": "Día 1: Fuerza Pierna",
+          "notes": "Foco cuádriceps / isometría"
+        },
+        "Martes": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Miércoles": {
+          "type": "gym",
+          "desc": "Día 2: Fuerza Superior",
+          "notes": "Espalda y tracciones"
+        },
+        "Jueves": {
+          "type": "f7",
+          "desc": "Fútbol 11 (Partido)",
+          "notes": "Sprints y saltos"
+        },
+        "Viernes": {
+          "type": "gym",
+          "desc": "Día 3: Potencia / Empuje",
+          "notes": "Landmine y pliometría"
+        },
+        "Sábado": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        },
+        "Domingo": {
+          "type": "rest",
+          "desc": "Descanso Total",
+          "notes": "Recuperar y recargar"
+        }
+      }
+    },
+    "2026-07-20": {
+      "padel": "1",
+      "f7": "3",
+      "days": {
+        "Lunes": {
+          "type": "gym",
+          "desc": "Día 1: Fuerza Pierna",
+          "notes": "Foco cuádriceps / isometría"
+        },
+        "Martes": {
+          "type": "padel",
+          "desc": "Partido de Pádel",
+          "notes": "Cardio agilidad"
+        },
+        "Miércoles": {
+          "type": "gym",
+          "desc": "Día 2: Fuerza Superior",
+          "notes": "Espalda y tracciones"
+        },
+        "Jueves": {
+          "type": "f7",
+          "desc": "Fútbol 11 (Partido)",
           "notes": "Sprints y saltos"
         },
         "Viernes": {
@@ -177,241 +369,7 @@
           "notes": "Recuperar y recargar"
         }
       },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
-    },
-    "2026-06-22": {
-      "padel": "0",
-      "f7": "2",
       "allowWeekend": false,
-      "days": {
-        "Lunes": {
-          "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
-          "notes": "Partido de F7 - jugador"
-        },
-        "Martes": {
-          "type": "gym",
-          "desc": "Día 1: Fuerza Pierna",
-          "notes": "Prensa y rumano pesado (foco fuerza)"
-        },
-        "Miércoles": {
-          "type": "gym",
-          "desc": "Día 2: Fuerza Superior",
-          "notes": "Tracciones y hombro (piernas descansan)"
-        },
-        "Jueves": {
-          "type": "f7",
-          "desc": "Fútbol 7 (Partido)",
-          "notes": "Partido de F7 - jugador"
-        },
-        "Viernes": {
-          "type": "gym",
-          "desc": "Día 3: Potencia / Empuje",
-          "notes": "Landmine y Cossack (explosividad)"
-        },
-        "Sábado": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "No entrenar (fin de semana)"
-        },
-        "Domingo": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "No entrenar (fin de semana)"
-        }
-      },
-      "suggestedDays": [
-        1,
-        2,
-        4
-      ]
-    },
-    "2026-06-29": {
-      "padel": "2",
-      "f7": "0",
-      "allowWeekend": false,
-      "days": {
-        "Lunes": {
-          "type": "gym",
-          "desc": "Día 1: Fuerza Pierna (Descarga)",
-          "notes": "Volumen al 50% (2 series). Mantener pesos."
-        },
-        "Martes": {
-          "type": "padel",
-          "desc": "Partido de Pádel 1",
-          "notes": "Cardio y agilidad lateral"
-        },
-        "Miércoles": {
-          "type": "gym",
-          "desc": "Día 2: Fuerza Superior (Descarga)",
-          "notes": "Volumen al 50% (2 series). Espalda y hombro."
-        },
-        "Jueves": {
-          "type": "padel",
-          "desc": "Partido de Pádel 2",
-          "notes": "Cardio y agilidad lateral"
-        },
-        "Viernes": {
-          "type": "gym",
-          "desc": "Día 3: Potencia / Empuje (Descarga)",
-          "notes": "Volumen al 50% (2 series). Sin saltos/sprints."
-        },
-        "Sábado": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperación de descarga"
-        },
-        "Domingo": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperación de descarga"
-        }
-      },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
-    },
-    "2026-07-06": {
-      "padel": "2",
-      "f7": "0",
-      "allowWeekend": false,
-      "days": {
-        "Lunes": {
-          "type": "gym",
-          "desc": "Día 1: Fuerza Pierna",
-          "notes": "Foco cuádriceps / isometría"
-        },
-        "Martes": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Miércoles": {
-          "type": "gym",
-          "desc": "Día 2: Fuerza Superior",
-          "notes": "Espalda y tracciones"
-        },
-        "Jueves": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Viernes": {
-          "type": "gym",
-          "desc": "Día 3: Potencia / Empuje",
-          "notes": "Landmine y pliometría"
-        },
-        "Sábado": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Domingo": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        }
-      },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
-    },
-    "2026-07-13": {
-      "padel": "2",
-      "f7": "0",
-      "allowWeekend": false,
-      "days": {
-        "Lunes": {
-          "type": "gym",
-          "desc": "Día 1: Fuerza Pierna",
-          "notes": "Foco cuádriceps / isometría"
-        },
-        "Martes": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Miércoles": {
-          "type": "gym",
-          "desc": "Día 2: Fuerza Superior",
-          "notes": "Espalda y tracciones"
-        },
-        "Jueves": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Viernes": {
-          "type": "gym",
-          "desc": "Día 3: Potencia / Empuje",
-          "notes": "Landmine y pliometría"
-        },
-        "Sábado": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Domingo": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        }
-      },
-      "suggestedDays": [
-        0,
-        2,
-        4
-      ]
-    },
-    "2026-07-20": {
-      "padel": "2",
-      "f7": "0",
-      "allowWeekend": false,
-      "days": {
-        "Lunes": {
-          "type": "gym",
-          "desc": "Día 1: Fuerza Pierna",
-          "notes": "Foco cuádriceps / isometría"
-        },
-        "Martes": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Miércoles": {
-          "type": "gym",
-          "desc": "Día 2: Fuerza Superior",
-          "notes": "Espalda y tracciones"
-        },
-        "Jueves": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Viernes": {
-          "type": "gym",
-          "desc": "Día 3: Potencia / Empuje",
-          "notes": "Landmine y pliometría"
-        },
-        "Sábado": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        },
-        "Domingo": {
-          "type": "rest",
-          "desc": "Descanso Total",
-          "notes": "Recuperar y recargar"
-        }
-      },
       "suggestedDays": [
         0,
         2,
@@ -754,8 +712,8 @@
     },
     {
       "date": "2026-06-08",
-      "weight": 85,
-      "notes": "Peso Base de Partida"
+      "weight": 85.7,
+      "notes": ""
     }
   ],
   "gymLogs": {
@@ -2294,11 +2252,13 @@
     }
   ],
   "activeBlock": "fase0_blockA",
-  "activeRoutineDay": 2,
+  "activeRoutineDay": 1,
+  "currentWeight": 85.7,
+  "wellnessLogs": {},
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-22T21:25:46.533Z"
+    "lastSync": ""
   },
-  "wellnessLogs": {}
+  "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
