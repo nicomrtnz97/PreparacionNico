@@ -377,7 +377,7 @@
       ]
     },
     "2026-07-27": {
-      "padel": "0",
+      "padel": "",
       "f7": "",
       "allowWeekend": false,
       "suggestedDays": [
@@ -387,9 +387,9 @@
       ],
       "days": {
         "Lunes": {
-          "type": "padel",
-          "desc": "Partido de Pádel",
-          "notes": "Cardio agilidad"
+          "type": "rest",
+          "desc": "Descanso / Movilidad Activa",
+          "notes": "Recuperación y movilidad"
         },
         "Martes": {
           "type": "gym",
@@ -3320,7 +3320,7 @@
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": "2026-07-23T14:53:51.845Z"
+    "lastSync": "2026-07-23T14:54:32.195Z"
   },
   "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
 }
