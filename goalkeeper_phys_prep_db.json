@@ -3320,7 +3320,13 @@
   "githubSync": {
     "username": "nicomrtnz97",
     "repo": "PreparacionNico",
-    "lastSync": ""
+    "lastSync": "2026-07-27T20:13:55.723Z"
   },
-  "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2"
+  "passwordHash": "2856be9ceef73c224d6f52458a92f668cb0f926dccb7af1d676692efbacb59b2",
+  "profile": {
+    "name": "Nico",
+    "age": "29 años",
+    "height": "1.85 m",
+    "target": "Meta: 80.0 kg"
+  }
 }
