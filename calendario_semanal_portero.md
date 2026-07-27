@@ -20,7 +20,7 @@ Como tus entrenamientos y partidos de F11 varían cada semana, usa estas 3 regla
 
     *   El **Día 1 de Gym** (Piernas pesado en prensa/multipower) debe estar separado por al menos **24 horas** de un partido o entrenamiento de F11 o de un pádel muy intenso. 
 
-    *   *Ejemplo incorrecto:* Hacer piernas pesadas el lunes por la tarde y jugar o entrenar F11 el martes por la mañana. Tus rodillas sufrirán y no rendirás.
+    *   *Ejemplo incorrecto:* Hacer piernas pesadas el lunes a las 17:00 y jugar o entrenar F11 el martes a las 17:00. Tus rodillas sufrirán y no rendirás.
 
 2.  **Regla de los 3 días de Gym:** 
 
