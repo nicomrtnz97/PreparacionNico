@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.2</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.3</span></h1>
 
 
 
@@ -57459,6 +57459,18 @@
 
 
                     appState = JSON.parse(stored);
+                    
+                    // Force clean incorrect baseline date 2026-06-07 to break sync loops
+                    if (appState.weightLogs) {
+                        appState.weightLogs = appState.weightLogs.filter(l => l.date !== "2026-06-07");
+                    }
+                    if (appState.testLogs) {
+                        appState.testLogs = appState.testLogs.filter(l => l.date !== "2026-06-07");
+                    }
+                    if (appState.gymLogs && appState.gymLogs["2026-06-07"]) {
+                        delete appState.gymLogs["2026-06-07"];
+                    }
+                    
                     
                     // Reparación automática de bases de datos corruptas
                     if (appState.weightLogs && !Array.isArray(appState.weightLogs)) {
