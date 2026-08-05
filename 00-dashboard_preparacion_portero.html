@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.8</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.9</span></h1>
 
 
 
@@ -84230,7 +84230,7 @@ row.className = `cal-day-row active-${dayData.type}`;
                 appState.wellnessLogs = {};
             }
             appState.wellnessLogs[dateKey] = { fatigue, pain, sleep, score: fatigue + pain + sleep, percentage: readiness.scorePercentage };
-            saveState();
+            saveState(!!window.isDraggingWellness);
             
             resultBox.style.background = readiness.bgColor;
             resultBox.style.borderColor = readiness.borderColor;
@@ -84250,15 +84250,17 @@ row.className = `cal-day-row active-${dayData.type}`;
             const sleepInput = document.getElementById('well-sleep');
             if (!fatigueInput || !painInput || !sleepInput) return;
             
-            if (appState.wellnessLogs && appState.wellnessLogs[dateKey]) {
-                const log = appState.wellnessLogs[dateKey];
-                if (document.activeElement !== fatigueInput) fatigueInput.value = log.fatigue;
-                if (document.activeElement !== painInput) painInput.value = log.pain;
-                if (document.activeElement !== sleepInput) sleepInput.value = log.sleep;
-            } else {
-                if (document.activeElement !== fatigueInput) fatigueInput.value = 5;
-                if (document.activeElement !== painInput) painInput.value = 5;
-                if (document.activeElement !== sleepInput) sleepInput.value = 5;
+            if (!window.isDraggingWellness) {
+                if (appState.wellnessLogs && appState.wellnessLogs[dateKey]) {
+                    const log = appState.wellnessLogs[dateKey];
+                    fatigueInput.value = log.fatigue;
+                    painInput.value = log.pain;
+                    sleepInput.value = log.sleep;
+                } else {
+                    fatigueInput.value = 5;
+                    painInput.value = 5;
+                    sleepInput.value = 5;
+                }
             }
             
             document.getElementById('val-fatigue').innerText = fatigueInput.value;
@@ -84898,6 +84900,31 @@ let onloadCompleted = false;
         updateUI();
         alert("¡Perfil guardado correctamente y programado para sincronizarse!");
     }
+
+    // Track wellness slider touch/drag state to prevent WebKit range touch freeze
+    window.isDraggingWellness = false;
+    window.addEventListener('touchstart', (e) => {
+        if (e.target && e.target.id && e.target.id.startsWith('well-')) {
+            window.isDraggingWellness = true;
+        }
+    }, { passive: true });
+    window.addEventListener('mousedown', (e) => {
+        if (e.target && e.target.id && e.target.id.startsWith('well-')) {
+            window.isDraggingWellness = true;
+        }
+    });
+    window.addEventListener('touchend', () => {
+        if (window.isDraggingWellness) {
+            window.isDraggingWellness = false;
+            saveState(false);
+        }
+    });
+    window.addEventListener('mouseup', () => {
+        if (window.isDraggingWellness) {
+            window.isDraggingWellness = false;
+            saveState(false);
+        }
+    });
 </script>
 
 
