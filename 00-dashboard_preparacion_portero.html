@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.6.0</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.6.1</span></h1>
 
 
 
@@ -84229,7 +84229,9 @@ row.className = `cal-day-row active-${dayData.type}`;
             if (!appState.wellnessLogs) {
                 appState.wellnessLogs = {};
             }
+            console.log("DEBUG: updateWellness saving to dateKey:", dateKey, "values:", { fatigue, pain, sleep });
             appState.wellnessLogs[dateKey] = { fatigue, pain, sleep, score: fatigue + pain + sleep, percentage: readiness.scorePercentage };
+            console.log("DEBUG: appState.wellnessLogs after write:", JSON.stringify(appState.wellnessLogs));
             saveState();
             
             resultBox.style.background = readiness.bgColor;
@@ -84250,6 +84252,7 @@ row.className = `cal-day-row active-${dayData.type}`;
             const sleepInput = document.getElementById('well-sleep');
             if (!fatigueInput || !painInput || !sleepInput) return;
             
+            console.log("DEBUG: loadWellnessForDate reading dateKey:", dateKey, "hasLog:", !!(appState.wellnessLogs && appState.wellnessLogs[dateKey]), "log:", appState.wellnessLogs ? appState.wellnessLogs[dateKey] : null);
             if (appState.wellnessLogs && appState.wellnessLogs[dateKey]) {
                 const log = appState.wellnessLogs[dateKey];
                 fatigueInput.value = log.fatigue;
