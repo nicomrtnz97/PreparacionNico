@@ -23230,7 +23230,7 @@
 
 
 
-            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.5.9</span></h1>
+            <h1 style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 10px;"><span>PREPARACIÓN FÍSICA</span><span style="font-size: 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 3px 8px; border-radius: 6px; color: #94a3b8; font-weight: 500; font-family: monospace; letter-spacing: 0.5px; height: fit-content;">v1.6.0</span></h1>
 
 
 
@@ -26649,7 +26649,7 @@
                         <!-- Fatiga Muscular -->
                         <div>
                             <label style="display: block; font-size: 0.75rem; color: #cbd5e1; margin-bottom: 4px;">💪 Fatiga Muscular (5=Fresco, 1=Cansado)</label>
-                            <input type="range" id="well-fatigue" min="1" max="5" value="5" oninput="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
+                            <input type="range" id="well-fatigue" min="1" max="5" value="5" oninput="document.getElementById('val-fatigue').innerText = this.value" onchange="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
                             <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #64748b;">
                                 <span>Extrema (1)</span><span id="val-fatigue" style="color: var(--accent-blue); font-weight: 700;">5</span><span>Ninguna (5)</span>
                             </div>
@@ -26658,7 +26658,7 @@
                         <!-- Dolor Articular -->
                         <div>
                             <label style="display: block; font-size: 0.75rem; color: #cbd5e1; margin-bottom: 4px;">🦵 Dolor Articular/Tendinoso (5=Cero, 1=Alto)</label>
-                            <input type="range" id="well-pain" min="1" max="5" value="5" oninput="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
+                            <input type="range" id="well-pain" min="1" max="5" value="5" oninput="document.getElementById('val-pain').innerText = this.value" onchange="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
                             <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #64748b;">
                                 <span>Alto (1)</span><span id="val-pain" style="color: var(--accent-blue); font-weight: 700;">5</span><span>Ninguno (5)</span>
                             </div>
@@ -26667,7 +26667,7 @@
                         <!-- Calidad de Sueño -->
                         <div>
                             <label style="display: block; font-size: 0.75rem; color: #cbd5e1; margin-bottom: 4px;">😴 Calidad del Sueño (5=Excelente, 1=Mal)</label>
-                            <input type="range" id="well-sleep" min="1" max="5" value="5" oninput="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
+                            <input type="range" id="well-sleep" min="1" max="5" value="5" oninput="document.getElementById('val-sleep').innerText = this.value" onchange="updateWellness()" style="width: 100%; cursor: pointer; accent-color: var(--accent-blue);">
                             <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #64748b;">
                                 <span>Muy Mal (1)</span><span id="val-sleep" style="color: var(--accent-blue); font-weight: 700;">5</span><span>Excelente (5)</span>
                             </div>
@@ -84230,7 +84230,7 @@ row.className = `cal-day-row active-${dayData.type}`;
                 appState.wellnessLogs = {};
             }
             appState.wellnessLogs[dateKey] = { fatigue, pain, sleep, score: fatigue + pain + sleep, percentage: readiness.scorePercentage };
-            saveState(!!window.isDraggingWellness);
+            saveState();
             
             resultBox.style.background = readiness.bgColor;
             resultBox.style.borderColor = readiness.borderColor;
@@ -84250,17 +84250,15 @@ row.className = `cal-day-row active-${dayData.type}`;
             const sleepInput = document.getElementById('well-sleep');
             if (!fatigueInput || !painInput || !sleepInput) return;
             
-            if (!window.isDraggingWellness) {
-                if (appState.wellnessLogs && appState.wellnessLogs[dateKey]) {
-                    const log = appState.wellnessLogs[dateKey];
-                    fatigueInput.value = log.fatigue;
-                    painInput.value = log.pain;
-                    sleepInput.value = log.sleep;
-                } else {
-                    fatigueInput.value = 5;
-                    painInput.value = 5;
-                    sleepInput.value = 5;
-                }
+            if (appState.wellnessLogs && appState.wellnessLogs[dateKey]) {
+                const log = appState.wellnessLogs[dateKey];
+                fatigueInput.value = log.fatigue;
+                painInput.value = log.pain;
+                sleepInput.value = log.sleep;
+            } else {
+                fatigueInput.value = 5;
+                painInput.value = 5;
+                sleepInput.value = 5;
             }
             
             document.getElementById('val-fatigue').innerText = fatigueInput.value;
@@ -84901,30 +84899,7 @@ let onloadCompleted = false;
         alert("¡Perfil guardado correctamente y programado para sincronizarse!");
     }
 
-    // Track wellness slider touch/drag state to prevent WebKit range touch freeze
-    window.isDraggingWellness = false;
-    window.addEventListener('touchstart', (e) => {
-        if (e.target && e.target.id && e.target.id.startsWith('well-')) {
-            window.isDraggingWellness = true;
-        }
-    }, { passive: true });
-    window.addEventListener('mousedown', (e) => {
-        if (e.target && e.target.id && e.target.id.startsWith('well-')) {
-            window.isDraggingWellness = true;
-        }
-    });
-    window.addEventListener('touchend', () => {
-        if (window.isDraggingWellness) {
-            window.isDraggingWellness = false;
-            saveState(false);
-        }
-    });
-    window.addEventListener('mouseup', () => {
-        if (window.isDraggingWellness) {
-            window.isDraggingWellness = false;
-            saveState(false);
-        }
-    });
+    
 </script>
 
 
